@@ -3,7 +3,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Group(models.Model):
+
+class FriendGroup(models.Model):
     class Meta:
         pass
 
@@ -14,3 +15,5 @@ class Group(models.Model):
     members = models.ManyToManyField(User, related_name='member_user')
 
 
+    def __str__(self):
+        return 'id:{}, grupo:{}'.format(self.pk, self.group_name)
