@@ -1,0 +1,103 @@
+<!-- Vista inicial para introduccion del analisis tipo cluster-->
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head_css_page %}
+    <link href="{% static 'css/coffee.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_page %}
+{% block content %}
+
+    <div class="jumbotron text-center">
+        <h1>COFFEEORDER APP!</h1>
+        {% if user.is_authenticated %}
+            {{ warning }}
+            <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:create_group' %}"><span
+                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+
+            <a type="button" class="btn btn-lg btn-default" onclick="show_code()"><span
+                    class="glyphicon glyphicon-plus-sign"></span> Unirse a grupo</a>
+            <div class="row " id="invitationContainer" hidden>
+                <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
+                    <h3>CÓDIGO DE INVITACIÓN:</h3>
+                    <form method="post" name="join_group_form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <h2 style="font-weight:bold">Introducir código:</h2>
+                            {% for field in join_group_form %}
+                                <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                {{ field }}
+                            {% endfor %}
+                        </div>
+                        <div class="">
+                            <input class="btn btn-primary" type="submit" name="" value="Unirse">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>LISTA DE PEDIDOS</h2>
+                <p>
+                    AQUI SE MUESTRA UNA LISTA DE LOS PEDIDOS
+                </p>
+            </div>
+
+        </div> <!-- row -->
+
+    </div> <!-- container-->
+
+    <div class="container-fluid bg-grey">
+        <div class="row">
+            {% if user.is_authenticated %}
+                <h2>GRUPOS</h2>
+
+                <div class="row card-container">
+
+                    {% for group in groups %}
+                        <div class="col-sm-6 col-md-4 col-lg-2 mt-4">
+                            <div class="card">
+
+                                <a href="coffeeorder_app/group/{{ group.id }}"><img class="card-img-top"
+                                                                                    src="/media/{{ group.group_pic }}"></a>
+                                <div class="card-block">
+
+                                    <h4 class="card-title mt-3">{{ group.group_name }}</h4>
+
+                                </div>
+                                <div class="card-footer">
+                                    <small>pedidos</small>
+                                    <button class="btn btn-secondary float-right btn-sm">show</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    {% endfor %}
+                </div> <!-- row -->
+            {% else %}
+                <a type="button" class="btn btn-lg btn-default" href="#"><span
+                        class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+            {% endif %}
+
+        </div> <!-- row -->
+    </div> <!-- container-->
+
+
+
+    </div> <!-- container-->
+
+
+    {% block footer_javascript_page %}
+
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/coffee.js' %}"></script>
+    {% endblock footer_javascript_page %}
+
+{% endblock %}

@@ -20,11 +20,12 @@ from django.conf.urls.static import static
 
 
 from account_app import views as aviews
-
+from coffeeorder_app import views as cviews
 urlpatterns = [
-    path('', aviews.index, name='index'),
+    path('', cviews.index, name='index'),
     path('admin/', admin.site.urls),
     path('logout/', aviews.user_logout,name='logout'),
     path('account_app/', include('account_app.urls')),
+    path('coffeeorder_app/', include('coffeeorder_app.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

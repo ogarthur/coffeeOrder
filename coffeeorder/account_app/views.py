@@ -11,8 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
-from .forms import UserForm, UserProfileForm
-from .models import UserProfileInfo
+from .forms import UserForm, UserProfileForm, GroupForm
+from .models import UserProfileInfo, UserGroup
+
+import random, string
 
 # Create your views here.
 ##########################################REGISTRO/LOGIN##################################################
@@ -57,9 +59,11 @@ def user_login(request):
 
         if user:
             if user.is_active:
-                login(request,user)
-                user_info=UserProfileInfo.objects.filter(user=user).values_list('profile_pic',flat=True)
-                request.session['profile_pic']=user_info[0]
+                login(request, user)
+                if UserProfileInfo.objects.filter(user=user).exists():
+                    user_info = UserProfileInfo.objects.filter(user=user).values_list('profile_pic', flat=True)
+                    print(user_info)
+                    request.session['profile_pic'] = user_info[0]
                 return HttpResponseRedirect(reverse('index'))
 
             else:
@@ -82,11 +86,37 @@ def user_logout(request):
 def delete_user(request):
     from django.contrib.auth.models import User
     print("borrando")
-    u = User.objects.get(username = request.user.username)
+    u = User.objects.get(username=request.user.username)
     print("here")
     u.delete()
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def create_group(request):
+    registered = False
+    if request.method == "POST":
+
+        group_form = GroupForm(request.POST, request.FILES)
+
+        if group_form.is_valid():
+
+            group = group_form.save()
+            #group = UserGroup.objects.get(group_name=group.group_name)
+            group.group_code = ''.join(random.choices(string.ascii_letters + string.digits, k=4)).upper()
+            group.group_admin.add(request.user)
+            group.group_members.add(request.user)
+            if not group.group_pic:
+                group.group_pic = 'group_pics/group.png'
+            group.save()
+            registered = True
+            print('good!')
+        else:
+            print(group_form.errors)
+    else:
+        group_form = GroupForm()
+        print("CREADO FORMULARIO")
+    return render(request,'account_app/creategroup.html', {'group_form': group_form, 'registered': registered})
 
 def index(request):
     """Funcion que devuelve la vista principal de la página"""

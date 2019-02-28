@@ -23,3 +23,14 @@
     width:90%;
   }
 }
+.profile_pic{
+  width: 22em;
+  border-radius: 50%
+}
+
+@media screen and (max-width: 768px) {
+  .profile_pic {
+      width: 16em;
+
+  }
+}

@@ -2,7 +2,7 @@ from django import forms
 from django.core import validators
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
-from .models import UserProfileInfo
+from .models import UserProfileInfo, UserGroup
 from django.core.files.images import get_image_dimensions
 
 
@@ -93,3 +93,33 @@ class UserProfileForm(forms.ModelForm):
 
         }
 
+class GroupForm(forms.ModelForm):
+    """ FORMULARIO PARA CREAR GRUPOS"""
+
+
+    class Meta():
+        model = UserGroup
+        fields = ('group_name', 'group_description', 'max_members', 'group_pic', )
+        labels = {
+                'group_name': _('Nombre del grupo'),
+                'group_description': _('Describe el grupo'),
+                'max_members': _('Número máximo de miembros'),
+                'group_pic': _('Logo del grupo'),
+                }
+        help_texts = {
+
+        }
+        widgets = {
+            'group_name': forms.TextInput(attrs={'class': 'form-control', }),
+            'group_description': forms.TextInput(attrs={'class': 'form-control', }),
+            'max_members': forms.NumberInput(attrs={'class': 'form-control', }),
+            'group_pic': forms.FileInput(attrs={'class': 'form-control', }),
+        }
+class JoinGroupForm(forms.Form):
+    """ FORMULARIO PARA CREAR GRUPOS"""
+
+    group_code = forms.CharField(label='Código de invitación:', widget=forms.TextInput(attrs={'required': 'required', 'class': 'form-control', }))
+
+    def clean(self):
+        all_clean_data = super( JoinGroupForm, self).clean()
+        friend = all_clean_data['group_code']
