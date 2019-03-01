@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_css_section %}
+  <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_section %}
+{% block content %}
+
+<div class="jumbotron text-center">
+    <h1>{{ user_data.user.username|default:'USUARIO' }}</h1>
+   <div class="row">
+
+                <img class="img-fluid mb-5 d-block mx-auto profile_pic" src="/media/{{ user_data.profile_pic }}" alt="profile_pic">
+
+            </div>
+
+</div>
+
+
+<div class="container-fluid ">
+  <div class="container-fluid registration-container col-md-6 col-md-offset-3">
+       <div class="row">
+
+        <h2 style="text-align:center"><u>DATOS DEL USUARIO:</u></h2>
+
+        <div class="row"><div class="col-md-6"><span class="profile-header">ID:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.id}}</span></div></div>
+        <div class="row"><div class="col-md-6"><span class="profile-header">Nombre de usuario:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.username}}</span></div></div>
+        {% if user.first_name %}
+        <div class="row"><div class="col-md-6"><span class="profile-header">Nombre:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.first_name}}</span></div></div>
+        {% endif %}
+        {% if user.last_name %}
+        <div class="row"><div class="col-md-6"><span class="profile-header">Apellidos:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.apellidos}}</span></div></div>
+        {% endif %}
+        {% for info in  user_info %}
+          <div class=" col-md-offset-3">
+            {% if info.profile_pic %}
+            <img src="/media/{{user_data.profile_pic}}" class="perfil-img" alt="profile_pic">
+            {% else %}
+              <img class="avatar-img-nav" src="{% static 'images/avatar.png'%}" class="perfil-img" alt="profile_pic">
+            {% endif %}
+          </div>
+        {% endfor %}
+        {% if request.user.id is user_data.user.id %}
+          <div class="col-md-2 edit-logo"><span class="glyphicon glyphicon-pencil"></span></div>
+          <div class="col-md-2 col-md-offset-5">  <a href="{% url 'account_app:delete_user' %}" class="btn btn-danger">BORRAR USUARIO</a></div>
+        {% endif %}
+
+  </div><!-- row -->
+
+
+  </div>
+</div>
+
+{% endblock %}

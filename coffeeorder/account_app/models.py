@@ -25,6 +25,7 @@ class UserGroup(models.Model):
     group_pic = models.ImageField(upload_to='group_pics/', default='group_pics/coffee.png',  null=True, blank=True)
     group_code = models.CharField(max_length=100)
     fav = models.BooleanField(default=False)
+    closed = models.BooleanField(default=False)
     group_admin = models.ManyToManyField(User, related_name='groupAdmin')
     group_members = models.ManyToManyField(User, related_name='groupMembers')
 

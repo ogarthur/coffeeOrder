@@ -51,11 +51,3 @@ def index(request):
 
         return render(request, 'account_app/login.html')
 
-@login_required
-def getGroupPage(request, group_id):
-    group = UserGroup.objects.get(id=group_id)
-
-    if group.group_members.filter(pk=request.user.pk).exists():
-        return render(request, 'coffeeorder_app/groupView.html', {'group': group})
-    else:
-        return render(request, 'coffeeorder_app/groupView.html', )
