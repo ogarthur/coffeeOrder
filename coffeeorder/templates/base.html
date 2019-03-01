@@ -65,9 +65,10 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 {% if request.session.profile_pic %}
-                <img class="avatar-img-nav" src="/media/{{request.session.profile_pic}}">
+
+                <img class="avatar-img-nav" src="{% static 'images/profile_pics/' %}{{request.session.profile_pic}}">
                 {% else %}
-                <img class="avatar-img-nav" src="{% static 'images/avatar.png'%}">
+                <img class="avatar-img-nav" src="{% static 'images/avatar0.png'%}">
                 {% endif %}
                 {{request.user.username}}
               <span class="caret"></span></a>

@@ -19,6 +19,10 @@ import random, string
 
 app_name = 'account_app'
 # Create your views here.
+
+
+
+
 ##########################################REGISTRO/LOGIN##################################################
 #REGISTRO
 
@@ -33,7 +37,7 @@ def is_admin(group_id,user_id):
 def register(request):
     registered = False
     if request.method == "POST":
-        user_form       = UserForm(data=request.POST)
+        user_form = UserForm(data=request.POST)
         profile_form    = UserProfileForm(request.POST,request.FILES)
 
         if user_form.is_valid():
@@ -94,18 +98,20 @@ def user_logout(request):
 def delete_user(request):
     from django.contrib.auth.models import User
     print("borrando")
-    user = User.objects.get(user=request.user)
-    groups = UserGroup.objects.filter(group_admin=user).values()
+    user = User.objects.get(username=request.user.username)
+    groups = UserGroup.objects.filter(group_admin=user)
     for group in groups:
+        print(group.group_members)
         if group.group_members.count() == 1:
             delete_group(group.id)
     user.delete()
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
+
 @login_required
 def delete_group(request, group_id):
-    from django.contrib.auth.models import User
+
     print("borrando")
     group_to_delete = UserGroup.objects.get(id=group_id)
     print("here")
@@ -128,8 +134,18 @@ def delete_user_from_group(request, group_id,user_id):
 
 
 @login_required
+def abandon_group(request, group_id):
+    group_to_delete = UserGroup.objects.get(id=group_id)
+
+    group_to_delete.group_members.remove(request.user)
+    if group_to_delete.group_members.count() == 0:
+        delete_group(group_id)
+    return redirect('index')
+
+
+@login_required
 def get_profile(request, user_id):
-    user = User.objects.get(id =user_id)
+    user = User.objects.get(id=user_id)
     pic = UserProfileInfo.objects.get(user=user)
     groups_in = UserGroup.objects.filter(group_members=user).values()
     print(user)
@@ -141,6 +157,7 @@ def get_profile(request, user_id):
     print(user_data)
 
     return render(request, '{}/userProfile.html'.format(app_name), {'user_data': user_data,})
+
 
 @login_required
 def create_group(request):
@@ -171,12 +188,30 @@ def create_group(request):
 def getGroupPage(request, group_id):
     group = UserGroup.objects.get(id=group_id)
 
+    members = {}
+
+
+    for g in group.group_members.all():
+
+        user = User.objects.get(id=g.id)
+
+        pic = UserProfileInfo.objects.get(user=user)
+
+        members[g.id]= {
+            'username' : g.username,
+            'name' : g.first_name,
+            'profile_pic' : pic.profile_pic,
+        }
+    print(members)
     if group.group_members.filter(pk=request.user.pk).exists():
+
         if is_admin(group_id, request.user.id):
             admin = True
         else:
-            print('NO ES ADMIN')
+            print('NO ES ADMIN...')
             admin = False
-        return render(request, '{}/groupView.html'.format(app_name), {'group': group, 'admin': admin})
+
+
+        return render(request, '{}/groupView.html'.format(app_name), {'group': group,'members':members, 'admin': admin})
     else:
         return render(request, '{}/groupView.html'.format(app_name), )

@@ -25,7 +25,6 @@ class UserForm(forms.ModelForm):
         fields = (
         'username',
         'first_name',
-        'last_name',
         'email',
         'password',
         'confirm_password'
@@ -41,7 +40,6 @@ class UserForm(forms.ModelForm):
         labels = {
             'username': _('Nombre de usuario :'),
             'first_name': _('Nombre :'),
-            'last_name': _('Apellidos :'),
             'email': _('Email:'),
             'password':  _('Contraseña :'),
             'confirm_password':    _('Repita contraseña :'),
@@ -69,7 +67,6 @@ class UserForm(forms.ModelForm):
         widgets = {
                     'username':  forms.TextInput(attrs={'class':'form-control',}),
                     'first_name':  forms.TextInput(attrs={'class':'form-control',}),
-                    'last_name':  forms.TextInput(attrs={'class':'form-control',}),
                     'email':forms.EmailInput(attrs={'class':'form-control',}),
 
                 }

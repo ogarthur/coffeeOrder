@@ -10,7 +10,8 @@
     <div class="jumbotron text-center">
         {% if user.is_authenticated and group %}
             <div class="row">
-                <h1 style="text-align:center">GRUPO:{{ group.name|default:' ' }}</h1>
+                <h1 style="text-align:center">GRUPO:{{ group.group_name|default:' ' }}</h1>
+
             </div>
             <div class="row">
 
@@ -23,6 +24,7 @@
                 <a type="button" class="btn btn-lg btn-default" id="inviteToGroup" onclick="show_code()"><span
                         class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
                 <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
+                <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR GRUPO</a>
             </div>
             <div class="row " id="invitationContainer" hidden>
                 <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
@@ -56,10 +58,12 @@
 
                 <div class="row card-container">
 
-                    {% for member in group.group_members.all %}
+                    {% for key,member in members.items %}
+
                         <div class="col-sm-6 col-md-4 col-lg-2 mt-4">
                             <div class="card">
-                                <img class="card-img-top" src="/media/{{ group.group_pic }}">
+
+                                <img class="card-img-top" src="{% static 'images/profile_pics/' %}{{ member.profile_pic }}">
                                 <div class="card-block">
 
                                     <h4 class="card-title mt-3">{{ member.username }}</h4>
@@ -70,6 +74,7 @@
                                         <a class="btn btn-secondary float-right btn-sm"
                                            href="{% url 'account_app:delete_from_group' group.id member.id %}">ELIMINAR</a>
                                     {% endif %}
+
                                 </div>
                             </div>
                         </div>

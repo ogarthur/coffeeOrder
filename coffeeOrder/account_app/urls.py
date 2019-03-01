@@ -14,6 +14,8 @@ urlpatterns = [
     path('delete_group/<int:group_id>/', views.delete_group, name="delete_group"),
     path('delete_from_group/<int:group_id>/<int:user_id>', views.delete_user_from_group, name="delete_from_group"),
     path('group/<int:group_id>', views.getGroupPage, name='get_group_page'),
+    path('abandon_group/<int:group_id>', views.abandon_group, name="abandon_group"),
+
 
 
 ]

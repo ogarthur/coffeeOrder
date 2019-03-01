@@ -2,13 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 # Create your models here.
+PROFILE_PIC_CHOICES = (
+    ('avatar0.png', 'avatar0'),
+    ('avatar1.png', 'avatar1'),
+    ('avatar2.png', 'avatar2'),
+    ('avatar3.png', 'avatar3'),
+    ('avatar4.png', 'avatar4'),
+    ('avatar5.png', 'avatar5'),
 
+)
 
 class UserProfileInfo(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userInfo")
 
-    profile_pic = models.ImageField(upload_to='profile_pics/', default='profile_pics/avatar.png')
+    profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='0', max_length=100 )
     language = models.CharField(max_length=10,
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
