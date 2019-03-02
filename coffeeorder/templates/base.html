@@ -68,13 +68,13 @@
 
                 <img class="avatar-img-nav" src="{% static 'images/profile_pics/' %}{{request.session.profile_pic}}">
                 {% else %}
-                <img class="avatar-img-nav" src="{% static 'images/avatar0.png'%}">
+                <img class="avatar-img-nav" src="{% static 'images/profile_pics/avatar0.png'%}">
                 {% endif %}
                 {{request.user.username}}
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
 
-                <li>  <a href="/account_app/user/{{ user.id }}/">Perfil</a></li>
+                <li>  <a href="{% url 'account_app:get_profile' user.id %}">Perfil</a></li>
                 <li>  <a href="{% url 'account_app:user_logout' %}">Logout</a></li>
               </ul>
             </li>
@@ -95,7 +95,7 @@
   {# Footer #}
   <footer class="footer navbar fixed-bottom">
     <div class="alert alert-info text-center" role="alert">
-     <p>Versión Beta</p>
+     <p>V 0</p>
    </div>
   </footer>
 </body>
