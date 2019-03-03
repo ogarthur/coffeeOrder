@@ -50,23 +50,20 @@
         </div> <!-- row -->
 
     </div> <!-- container-->
-
+   {% if groups %}
     <div class="container-fluid bg-grey">
         <div class="row">
             {% if user.is_authenticated %}
                 <h2>GRUPOS</h2>
 
                 <div class="row card-container">
-
                     {% for group in groups %}
                         <div class="col-sm-6 col-md-4 col-lg-2 mt-4">
                             <div class="card">
 
                                 <a href="{% url 'account_app:get_group_page' group.id %}"><img class="card-img-top" src="/media/{{ group.group_pic }}"></a>
                                 <div class="card-block">
-
                                     <h4 class="card-title mt-3">{{ group.group_name }}</h4>
-
                                 </div>
                                 <div class="card-footer">
                                     <small>pedidos</small>
@@ -76,10 +73,10 @@
                         </div>
 
 
-
-
                     {% endfor %}
                 </div> <!-- row -->
+
+
             {% else %}
                 <a type="button" class="btn btn-lg btn-default" href="#"><span
                         class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
@@ -87,7 +84,7 @@
 
         </div> <!-- row -->
     </div> <!-- container-->
-
+ {% endif %}
 
 
     </div> <!-- container-->

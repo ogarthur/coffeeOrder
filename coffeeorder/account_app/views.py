@@ -38,10 +38,9 @@ def register(request):
     registered = False
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
-        profile_form    = UserProfileForm(request.POST,request.FILES)
+        profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid():
-
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -49,16 +48,22 @@ def register(request):
             profile.user = user
             profile.save()
             registered = True
+
+            return redirect('index')
         else:
             print(user_form.errors,profile_form.errors)
+            return render(request, '{}/registration.html'.format(app_name),
+                          {'user_form': user_form,
+                           'profile_form': profile_form,
+                           'registered': registered})
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request,'{}/registration.html'.format(app_name),
-    {'user_form': user_form,
-    'profile_form': profile_form,
-    'registered': registered})
+        return render(request,'{}/registration.html'.format(app_name),
+        {'user_form': user_form,
+        'profile_form': profile_form,
+        'registered': registered})
 
 #LOGIN
 def user_login(request):
@@ -122,7 +127,7 @@ def delete_group(request, group_id):
     return redirect('index')
 
 @login_required
-def delete_user_from_group(request, group_id,user_id):
+def delete_user_from_group(request, group_id, user_id):
     from django.contrib.auth.models import User
     group = UserGroup.objects.get(id=group_id)
     user_to_delete = User.objects.get(id=user_id)
@@ -176,7 +181,7 @@ def create_group(request):
                 group.group_pic = 'group_pics/group.png'
             group.save()
             registered = True
-            print('good!')
+            return redirect('index')
         else:
             print(group_form.errors)
     else:
@@ -198,6 +203,7 @@ def getGroupPage(request, group_id):
         pic = UserProfileInfo.objects.get(user=user)
 
         members[g.id]= {
+
             'username' : g.username,
             'name' : g.first_name,
             'profile_pic' : pic.profile_pic,

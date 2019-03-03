@@ -25,6 +25,7 @@
                         class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
                 <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
                 <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR GRUPO</a>
+                <a type="button" class="btn btn-lg btn-default" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR GRUPO</a>
             </div>
             <div class="row " id="invitationContainer" hidden>
                 <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
@@ -70,9 +71,11 @@
 
                                 </div>
                                 <div class="card-footer">
-                                    {% if admin and member.id != request.user.id %}
-                                        <a class="btn btn-secondary float-right btn-sm"
-                                           href="{% url 'account_app:delete_from_group' group.id member.id %}">ELIMINAR</a>
+
+                                    {% if admin and key != request.user.id %}
+
+                                 <a class="btn  float-right btn-sm btn-danger"
+                                           href="{% url 'account_app:delete_from_group' group.id key%}">ELIMINAR</a>
                                     {% endif %}
 
                                 </div>

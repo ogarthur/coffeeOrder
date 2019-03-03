@@ -1,36 +1,66 @@
-.glyphicon-user{
-  padding-right: 0.5em;
+.glyphicon-user {
+    padding-right: 0.5em;
 }
-.description-TextInput{
+
+.description-TextInput {
     min-height: 6em;
 }
-.registration-container,.login-container{
-/*  background-color:#c6b3e6;*/
-  padding: 2em 2em 2em 2em;
-  margin-top: 4em;
-  border-radius: 6px;
-  opacity:0.98;
+
+.registration-container, .login-container {
+    /*  background-color:#c6b3e6;*/
+    padding: 2em 2em 2em 2em;
+    margin-top: 4em;
+    border-radius: 6px;
+    opacity: 0.98;
 }
-.error_warning{
-  color:red!important;
+
+.error_warning {
+    color: red !important;
 }
+
 /*half*/
-@media screen and (max-width: 769px)  {
-  .registration-container{
-    width:50%;
-  }
-  .registration-container,.login-container{
-    width:90%;
-  }
+@media screen and (max-width: 769px) {
+    .registration-container {
+        width: 50%;
+    }
+
+    .registration-container, .login-container {
+        width: 90%;
+    }
 }
-.profile_pic{
-  width: 22em;
-  border-radius: 50%
+
+.profile_pic {
+    width: 22em;
+    border-radius: 50%
+}
+
+.img-selection {
+    width: 5em;
+    margin: 1em;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+#id_profile_pic{
+    display: none;
+}
+.img-selection:hover {
+    opacity: 1;
+    width: 5.5em;
+    margin: 0.5em;
+}
+
+.img-active {
+    opacity: 1;
+    width: 5.5em;
+    margin: 0.5em;
+    border: solid 5px green;
+
+
 }
 
 @media screen and (max-width: 768px) {
-  .profile_pic {
-      width: 16em;
+    .profile_pic {
+        width: 16em;
 
-  }
+    }
 }
