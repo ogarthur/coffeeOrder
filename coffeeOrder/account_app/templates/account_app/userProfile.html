@@ -20,29 +20,29 @@
   <div class="container-fluid registration-container col-md-6 col-md-offset-3">
        <div class="row">
 
-        <h2 style="text-align:center"><u>DATOS DEL USUARIO:</u></h2>
+        <h2 class="col-12"><u>DATOS DEL USUARIO:</u></h2>
 
-        <div class="row"><div class="col-md-6"><span class="profile-header">ID:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.id}}</span></div></div>
-        <div class="row"><div class="col-md-6"><span class="profile-header">Nombre de usuario:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.username}}</span></div></div>
+        <div class="col-6"><span class="profile-header">ID:</span></div><div class="col-6 user-data"><span class="profile-data">{{user_data.user.id}}</span></div>
+        <div class="col-6"><span class="profile-header">Nombre de usuario:</span></div><div class="col-6 user-data"><span class="profile-data">{{user_data.user.username}}</span></div>
         {% if user.first_name %}
-        <div class="row"><div class="col-md-6"><span class="profile-header">Nombre:</span></div><div class="col-md-6 user-data"><span class="profile-data">{{user_data.user.first_name}}</span></div></div>
+        <div class="col-6"><span class="profile-header">Nombre:</span></div><div class="col-6 user-data"><span class="profile-data">{{user_data.user.first_name}}</span></div>
         {% endif %}
+          </div><!-- row -->
+   <div class="row">
+      {% if user_data.profile_pic %}
 
-        {% for info in  user_info %}
-          <div class=" col-md-offset-3">
-            {% if info.profile_pic %}
-            <img src="{% static 'images/profile_pics/' %}{{  user_data.profile_pic}}" class="perfil-img" alt="profile_pic1">
-            {% else %}
-              <img class="avatar-img-nav" src="{% static 'images/profile_pics/avatar0.png'%}" class="perfil-img" alt="profile_pic">
-            {% endif %}
-          </div>
-        {% endfor %}
+                                <img class="img-fluid mb-5 d-block mx-auto profile_pic"
+                                     src="{% static 'images/profile_pics/' %}{{user_data.profile_pic }}">
+                            {% else %}
+                                <img class="img-fluid mb-5 d-block mx-auto profile_pic" src="{% static 'images/profile_pics/avatar0.png' %}">
+                            {% endif %}
         {% if request.user.id is user_data.user.id %}
+              </div><!-- row -->
           <div class="col-md-2 edit-logo"><span class="glyphicon glyphicon-pencil"></span></div>
           <div class="col-md-2 col-md-offset-5">  <a href="{% url 'account_app:delete_user' %}" class="btn btn-danger">BORRAR USUARIO</a></div>
         {% endif %}
 
-  </div><!-- row -->
+
 
 
   </div>

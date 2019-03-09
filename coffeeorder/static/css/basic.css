@@ -21,25 +21,30 @@ body {
 }
 
 footer {
-    position: absolute;
-
-    margin: 0 !important;
-    bottom: 0;
+    margin-top:3.5em;
     width: 100%;
     height: auto;
     background-color: var(--sandy-brown);
     border-radius: 0 !important;
 }
-
+.brand-logo{
+    width: 1em;
+}
 .content-container {
     min-height: 90vh; /* will cover the 90% of viewport */
     overflow: hidden;
     display: block;
     position: relative;
+    background-color: #ffc8241a;
 
 }
-
+#invitationContainer{
+       display:none;
+}
 .hidden-box {
+    margin-top:0.5em;
+
+    padding:0.5em;
     background: var(--sandy-brown-light);
 }
 
@@ -47,6 +52,7 @@ footer {
     background-color: var(--sandy-brown); /* verde */
     color: #ffffff;
     padding: 5em;
+    border-radius: 0;
 }
 
 .bg-grey {
@@ -111,7 +117,9 @@ input {
 .glyphicon-user {
     padding-right: 0.5em;
 }
-
+nav{
+    background-color: var( --hansa-yellow);
+}
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus {
     background-color: #b2cc99;
 }

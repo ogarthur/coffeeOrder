@@ -153,7 +153,6 @@ def get_profile(request, user_id):
     user = User.objects.get(id=user_id)
     pic = UserProfileInfo.objects.get(user=user)
     groups_in = UserGroup.objects.filter(group_members=user).values()
-    print(user)
     user_data = {
         'user': user,
         'profile_pic': pic.profile_pic,
@@ -161,7 +160,7 @@ def get_profile(request, user_id):
     }
     print(user_data)
 
-    return render(request, '{}/userProfile.html'.format(app_name), {'user_data': user_data,})
+    return render(request, '{}/userProfile.html'.format(app_name), {'user_data': user_data})
 
 
 @login_required

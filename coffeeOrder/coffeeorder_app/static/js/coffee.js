@@ -1,4 +1,5 @@
 
 function show_code() {
-    $('#invitationContainer').toggle()
+    $('#invitationContainer').toggle();
+    console.log("MONSTRADON GRUPO")
 }

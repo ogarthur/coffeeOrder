@@ -3,24 +3,23 @@
 {% block head_css_section %}
   <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
 {% endblock head_css_section %}
+{% block title %}SIGN UP{% endblock title %}
 {% block content %}
-
+{% if registered %}
 <div class="jumbotron text-center">
-  {% if registered %}
+
     <h1>Gracias por registrarte!</h1>
 
-  {% else %}
-  <h1>REGISTRAR NUEVO USUARIO</h1>
-  {% endif %}
-</div>
 
+</div>
+ {% endif %}
 {% if registered == False %}
 
 <div class="container-fluid ">
   <div class="container-fluid registration-container col-md-6 col-md-offset-3">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <h2>Datos del usuario:</h2>
+        <h2>REGISTRAR NUEVO USUARIO</h2>
         <form enctype="multipart/form-data" method="post">
           {% csrf_token %}
           {% for field in user_form %}

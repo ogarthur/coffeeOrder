@@ -30,7 +30,8 @@
 }
 
 .profile_pic {
-    width: 22em;
+    width: 15em;
+    height:15em;
     border-radius: 50%
 }
 
@@ -60,7 +61,7 @@
 
 @media screen and (max-width: 768px) {
     .profile_pic {
-        width: 16em;
-
+        width: 10em;
+height: 10em;
     }
 }
