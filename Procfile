@@ -1,1 +1,2 @@
-web: gunicorn coffeeorder.wsgi --log-file -
+release: python manage.py migrate
+eb: gunicorn coffeeorder.wsgi --log-file -
