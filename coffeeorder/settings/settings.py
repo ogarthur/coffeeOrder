@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -132,8 +133,19 @@ STATICFILES_DIRS = [
     ACCOUNT_STATIC_DIR,
     ]
 # MEDIA_DIR
-MEDIA_ROOT =MEDIA_DIR
+MEDIA_ROOT = os.path.join(BASE_DIR,"live-static","media-root")
 MEDIA_URL = '/media/'
+MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_AUTO_CREATE_BUCKET = True
+
+    INSTALLED_APPS.append('storages')
+    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 LOGIN_URL ='/account_app/user_login'
 import django_heroku
 django_heroku.settings(locals())
