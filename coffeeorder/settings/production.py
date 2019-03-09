@@ -5,7 +5,7 @@ import dj_database_url
 
 env = os.environ.copy()
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
-SECRET_KEY = 'dsaadsasdasddaweq2e123e12eddsa1tg4'
+       
 DEBUG = False
 DATABASES['default'] =  dj_database_url.config()
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
