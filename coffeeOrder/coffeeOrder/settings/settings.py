@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 
     'account_app',
     'coffeeorder_app',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
