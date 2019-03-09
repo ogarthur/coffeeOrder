@@ -12,7 +12,7 @@ DATABASES['default'] =  dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['ogarthur.com', 'https://www.ogarthur.com/', 'dev-coffeorder.herokuapp.com','coffe-order.herokuapp.com']
+ALLOWED_HOSTS = ['*','ogarthur.com', 'https://www.ogarthur.com/', 'dev-coffeorder.herokuapp.com','coffe-order.herokuapp.com','https://dev-coffeorder.herokuapp.com/']
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 try:
