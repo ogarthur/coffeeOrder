@@ -129,7 +129,7 @@ STATICFILES_DIRS = [
     ACCOUNT_STATIC_DIR,
     ]
 # MEDIA_DIR
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL  = '/media/'
+MEDIA_ROOT =MEDIA_DIR
+MEDIA_URL = '/media/'
 LOGIN_URL ='/account_app/user_login'
 django_heroku.settings(locals())
