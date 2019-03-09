@@ -1,0 +1,107 @@
+<!-- Vista inicial para introduccion del analisis tipo cluster-->
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head_css_page %}
+    <link href="{% static 'css/coffee.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_page %}
+{% block content %}
+
+    <div class="jumbotron text-center">
+        {% if user.is_authenticated and group %}
+            <div class="row">
+                <h1 class="mx-auto">GRUPO:{{ group.group_name|default:' ' }}</h1>
+
+            </div>
+            <div class="row">
+
+                <img class="img-fluid mb-5 d-block mx-auto profile_pic" src="/media/{{ group.group_pic }}" alt="">
+
+            </div>
+            <div class="row">
+                <a role="button" class="btn btn-primary" href="{% url 'account_app:create_group' %}"><span
+                        class="glyphicon glyphicon-plus-sign"></span> CREAR PEDIDO</a>
+                <a role="button" class="btn btn-primary" id="inviteToGroup" onclick="show_code()"><span
+                        class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
+            </div>
+
+            <div class="row group-options">
+
+                <a role="button" class="btn btn-danger" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR
+                    GRUPO</a>
+                {% if admin %}
+                <a role="button" class="btn btn-danger"
+                   href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
+                <a role="button" class="btn btn-warning" href="#">CERRAR GRUPO</a>
+                    {% endif %}
+            </div>
+            <div class="row " id="invitationContainer">
+                <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
+                    <h3>CÓDIGO DE INVITACIÓN:</h3>
+                    <h2 style="color: red;font-weight: bold">{{ group.group_code }}</h2>
+                </div>
+            </div>
+        {% else %}
+            <p> Este grupo no existe o no eres miembro de él.</p>
+        {% endif %}
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <h2>PEDIDO ACTUAL:</h2>
+                <p>
+                    AQUI SE MUESTRA EL PEDIDO ACTUAL
+                </p>
+            </div>
+
+        </div> <!-- row -->
+
+    </div> <!-- container-->
+
+    <div class="container-fluid bg-grey">
+
+              {% if user.is_authenticated and group %}
+                <div class="row"> <h2 >MIEMBROS</h2></div>
+
+                <div class="row card-container">
+                    {% for key,member in members.items %}
+                        <div class="col-6 col-md-4 col-lg-2 mt-4">
+                            <div class="card">
+                                <img class="card-img-top"
+                                     src="{% static 'images/profile_pics/' %}{{ member.profile_pic }}">
+                                <div class="card-block">
+                                    <h4 class="card-title mt-3">{{ member.username }}</h4>
+                                </div>
+                            {% if admin and key != request.user.id %}
+                                <div class="card-footer">
+
+                                        <a class="btn  float-right btn-sm btn-danger"
+                                           href="{% url 'account_app:delete_from_group' group.id key %}">ELIMINAR</a>
+
+                                </div>
+                         {% endif %}
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div> <!-- row -->
+            {% else %}
+                <a type="button" class="btn btn-lg btn-default" href="#"><span
+                        class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+            {% endif %}
+
+        </div> <!-- row -->
+    </div> <!-- container-->
+
+
+
+    </div> <!-- container-->
+
+    {% block footer_javascript_page %}
+
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/coffee.js' %}"></script>
+    {% endblock footer_javascript_page %}
+{% endblock %}

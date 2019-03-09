@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_css_section %}
+  <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_section %}
+{% block title %}SIGN UP{% endblock title %}
+{% block content %}
+{% if registered %}
+<div class="jumbotron text-center">
+
+    <h1>Gracias por registrarte!</h1>
+
+
+</div>
+ {% endif %}
+{% if registered == False %}
+
+<div class="container-fluid ">
+  <div class="container-fluid registration-container col-md-6 col-md-offset-3">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h2>REGISTRAR NUEVO USUARIO</h2>
+        <form enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          {% for field in user_form %}
+          <div class="form-group">
+            <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+            {{ field }}
+            <p>{{ field.errors }}{{ forms.non_field_errors }}</p>
+            {% if field.help_text %}
+            <small  class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+          {% for p_field in profile_form %}
+          <div class="form-group">
+            <label class="control-label" for="{{ p_field.name }}">{{ p_field.label }}</label>
+            {{ p_field  }}
+            <p>{{p_field.errors }}{{ forms.non_field_errors }}</p>
+            {% if p_field.help_text %}
+            <small  class="form-text text-muted">{{ p_field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+        <div id="image-selection">
+            <div class="row">
+
+            </div>
+        </div>
+          <div class="text-center">
+            <input class="btn btn-primary" type="submit" name="" value="Registrar" />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h2>¿Ya tienes cuenta? Haz login aquí:</h2>
+        <form action="{% url 'account_app:user_login' %}">
+        <div class="text-center">
+          <input class="btn btn-primary" type="submit" value="LOGIN" />
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+  <a class="btn btn-primary " style='margin: 5% 50%;' href="{% url 'account_app:user_login' %}">Login</a>
+{% endif %}
+    <script>
+    $( document ).ready(function() {
+    console.log( "ready!" );
+    let image =""
+    for (i = 0; i < 17; i++) {
+
+       image = '<img id="256_'+i+'" class="img-selection" onclick = "activate(event)" src="/static/images/profile_pics/256_'+i+'.png">';
+
+       $('#image-selection > div.row').append(image)
+    }
+    $('#image-selection > div > img:nth-child(1)').addClass("img-active")
+});
+
+    function activate(e) {
+        $(".img-active").removeClass("img-active")
+        $("#"+e.target.id).addClass("img-active")
+        $('#id_profile_pic').val(e.target.id+'.png')
+    }
+
+</script>
+{% endblock %}
