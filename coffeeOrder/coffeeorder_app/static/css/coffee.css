@@ -2,6 +2,7 @@
 
 /*****************CARDS*************************/
 .card {
+min-height:12em;
     font-size: 1em;
     overflow: hidden;
     padding: 0;
@@ -14,8 +15,21 @@
     width: 100%;
     height: auto;
 }
+.card-logo:hover{
+    background-color: #dc920b9e;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 2px #d4d4d5;
 
+}
+
+.card-logo {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+     padding: 2%;
+}
 .card-block {
+
+
     font-size: 1em;
     position: relative;
     margin: 0;
@@ -51,6 +65,7 @@
     color:black;
 }
 .card:hover{
+        opacity: 0.9;
     	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
 }
 .card-container a{
@@ -58,3 +73,5 @@
     text-decoration: none!important;
 }
 /*****************ENDCARDS*************************/
+
+

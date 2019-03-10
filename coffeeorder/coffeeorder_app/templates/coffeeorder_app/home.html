@@ -64,12 +64,13 @@
                           <a href="{% url 'account_app:get_group_page' group.id %}">
                             <div class="card" >
 
-                              <img class="card-img-top" src="/media/{{ group.group_pic }}">
-                                <div class="card-block">
+
+                                <div class="card-block" style="background-color:{{ group.group_color}};">
                                     <h4 class="card-title mt-3">{{ group.group_name }}</h4>
+                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <div class="card-footer">
-                                    <button class="btn btn-secondary  btn-sm">show</button>
+                                    <img class="card-logo" src="/static/images/svgs/1coffee.svg">
                                 </div>
                             </div>
                               </a>

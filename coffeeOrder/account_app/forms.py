@@ -96,12 +96,12 @@ class GroupForm(forms.ModelForm):
 
     class Meta():
         model = UserGroup
-        fields = ('group_name', 'group_description', 'max_members', 'group_pic', )
+        fields = ('group_name', 'group_description', 'max_members', 'group_color', )
         labels = {
                 'group_name': _('Nombre del grupo'),
                 'group_description': _('Describe el grupo'),
                 'max_members': _('Número máximo de miembros'),
-                'group_pic': _('Logo del grupo'),
+                'group_color': _('Color del grupo'),
                 }
         help_texts = {
 
@@ -110,7 +110,7 @@ class GroupForm(forms.ModelForm):
             'group_name': forms.TextInput(attrs={'class': 'form-control', }),
             'group_description': forms.TextInput(attrs={'class': 'form-control', }),
             'max_members': forms.NumberInput(attrs={'class': 'form-control', }),
-            'group_pic': forms.FileInput(attrs={'class': 'form-control', }),
+            'group_color':  forms.TextInput(attrs={'class': 'form-control color-menu', }),
         }
 class JoinGroupForm(forms.Form):
     """ FORMULARIO PARA CREAR GRUPOS"""

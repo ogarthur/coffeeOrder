@@ -176,8 +176,6 @@ def create_group(request):
             group.group_code = ''.join(random.choices(string.ascii_letters + string.digits, k=4)).upper()
             group.group_admin.add(request.user)
             group.group_members.add(request.user)
-            if not group.group_pic:
-                group.group_pic = 'group_pics/group.png'
             group.save()
             registered = True
             return redirect('index')
