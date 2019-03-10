@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -24,7 +24,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, './media')
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = '!-&s#pi9yn+(#kxgistd9)yzlrrx^^b-wo+*rl-jyftdcllw5k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,13 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'CONN_MAX_AGE': 500,
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -126,26 +122,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+django_heroku.settings(locals())
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
     ACCOUNT_STATIC_DIR,
     ]
 # MEDIA_DIR
-MEDIA_ROOT = os.path.join(BASE_DIR,"live-static","media-root")
-MEDIA_URL = '/media/'
-MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
-    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-    AWS_AUTO_CREATE_BUCKET = True
-
-    INSTALLED_APPS.append('storages')
-    MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL  = '/media/'
 LOGIN_URL ='/account_app/user_login'
-import django_heroku
-django_heroku.settings(locals())
