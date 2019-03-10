@@ -37,7 +37,7 @@
 
 .img-selection {
     width: 5em;
-    height: 5em;
+    height:5em;
     margin: 1em;
     border-radius: 50%;
     opacity: 0.7;
@@ -48,20 +48,45 @@
 .img-selection:hover {
     opacity: 1;
     width: 5.5em;
-    height: 5.5em;
+    height:5.5em;
     margin: 0.5em;
 }
 
 .img-active {
     opacity: 1;
-    width: 5.5em;
+     width: 5.5em;
     height:5.5em;
     margin: 0.5em;
     border: solid 5px green;
-
-
+}
+/* picker */
+.color-picker {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 10px;
+    border: 1px solid rgba(203, 203, 203, 0.6);
+    border-radius: 2px;
 }
 
+.color-picker > div {
+    width: 40px;
+    display: inline-block;
+    height: 40px;
+    margin: 5px;
+    border-radius: 100%;
+    opacity: 0.7;
+}
+
+.picker-wrapper {
+    padding: 20px;
+    text-align:center
+}
+
+.color-picker > div:hover {
+    opacity: 1;
+}
+.color-menu{
+    display: none!important;
+}
 @media screen and (max-width: 768px) {
     .profile_pic {
         width: 10em;

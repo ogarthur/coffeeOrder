@@ -38,11 +38,10 @@ class UserProfileInfo(models.Model):
 class UserGroup(models.Model):
 
     group_name = models.CharField(max_length=100, unique=True)
-    group_description = models.TextField(max_length=220)
+    group_description = models.TextField(max_length=220, blank=True)
     max_members = models.IntegerField(default=15)
-    group_pic = models.ImageField(upload_to='group_pics/', default='group_pics/coffee.png',  null=True, blank=True)
+    group_color = models.CharField(max_length=100, default="white")
     group_code = models.CharField(max_length=100)
-    fav = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     group_admin = models.ManyToManyField(User, related_name='groupAdmin')
     group_members = models.ManyToManyField(User, related_name='groupMembers')

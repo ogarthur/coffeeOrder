@@ -9,7 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 
 from .forms import UserForm, UserProfileForm, GroupForm
 from .models import UserProfileInfo, UserGroup
@@ -175,8 +176,6 @@ def create_group(request):
             group.group_code = ''.join(random.choices(string.ascii_letters + string.digits, k=4)).upper()
             group.group_admin.add(request.user)
             group.group_members.add(request.user)
-            if not group.group_pic:
-                group.group_pic = 'group_pics/group.png'
             group.save()
             registered = True
             return redirect('index')
