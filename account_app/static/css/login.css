@@ -37,6 +37,7 @@
 
 .img-selection {
     width: 5em;
+    height: 5em;
     margin: 1em;
     border-radius: 50%;
     opacity: 0.7;
@@ -47,12 +48,14 @@
 .img-selection:hover {
     opacity: 1;
     width: 5.5em;
+    height: 5.5em;
     margin: 0.5em;
 }
 
 .img-active {
     opacity: 1;
     width: 5.5em;
+    height:5.5em;
     margin: 0.5em;
     border: solid 5px green;
 
