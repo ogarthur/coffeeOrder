@@ -2,7 +2,8 @@
 
 /*****************CARDS*************************/
 .card {
-min-height:12em;
+    min-height:12em;
+    min-width:12em;
     font-size: 1em;
     overflow: hidden;
     padding: 0;

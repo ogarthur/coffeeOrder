@@ -10,6 +10,12 @@ svg:not(:root) {
 .figure-space, .figure>h2{
         margin-left: -15%;
 }
+.figure-space, .figure>h2{
+        margin-left: -15%;
+}
+.coffee-home{
+     margin-left: -4%!important;
+}
 .figure-space,.coffee-logo {
     max-width: 200px;
 }

@@ -3,13 +3,20 @@
 {% load staticfiles %}
 {% block head_css_page %}
     <link href="{% static 'css/coffee.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
 
 {% endblock head_css_page %}
 {% block title %}HOME{% endblock title %}
 {% block content %}
 
     <div class="jumbotron text-center">
-        <h1>COFFEEORDER APP!</h1>
+        <div class="figure col-12" >
+                    <svg class="figure-space coffee-home"  viewBox="0 0 300 300" aria-hidden="true">
+                        <image class="coffee-logo" x="35%" y="25%" xlink:href="{% static 'images/svgs/1coffee.svg'%}" />
+                        <ellipse fill="#595959" cx="185" cy="270" rx="80" ry="7"/>
+                    </svg>
+
+                </div>
         {% if user.is_authenticated %}
             {{ warning }}
             <a role="button" class="btn btn-primary"  href="{% url 'account_app:create_group' %}"><span
@@ -54,20 +61,20 @@
     </div> <!-- container-->
    {% if groups %}
     <div class="container-fluid bg-grey">
-        <div class="row">
+
             {% if user.is_authenticated %}
                 <div class="card-container">
                 <div class="row"> <h2 >GRUPOS</h2></div>
                 <div class="row">
                     {% for group in groups %}
-                        <div class="col-12 col-md-4 col-lg-2 mt-4 ">
+                        <div class="col-12 col-md-3 col-lg-2 mt-4 ">
                           <a href="{% url 'account_app:get_group_page' group.id %}">
                             <div class="card" >
 
 
                                 <div class="card-block" style="background-color:{{ group.group_color}};">
                                     <h4 class="card-title mt-3">{{ group.group_name }}</h4>
-                                     <p class="card-text">{{ group.group_description }}/p>
+                                     <p class="card-text">{{ group.group_description }}</p>
                                 </div>
                                 <div class="card-footer">
                                     <img class="card-logo" src="/static/images/svgs/1coffee.svg">
@@ -85,7 +92,7 @@
                         class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
             {% endif %}
 
-        </div> <!-- row -->
+
     </div> <!-- container-->
  {% endif %}
 

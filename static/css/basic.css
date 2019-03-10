@@ -51,7 +51,7 @@ footer {
 .jumbotron {
     background-color: var(--sandy-brown); /* verde */
     color: #ffffff;
-    padding: 5em;
+    padding: 1em;
     border-radius: 0;
 }
 
