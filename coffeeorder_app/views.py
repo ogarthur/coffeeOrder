@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.shortcuts import redirect
+
 from account_app.forms import JoinGroupForm
-from account_app.models import  UserGroup
+from .forms import AddBarForm
+
+from account_app.models import UserGroup
+
 # Create your views here.
 
 def index(request):
@@ -51,3 +56,110 @@ def index(request):
 
         return render(request, 'account_app/login.html')
 
+
+# #########BAR###############################
+
+def add_bar(request, group_id):
+    registered = False
+    if request.method == "POST":
+
+        bar_form = AddBarForm(request.POST, request.FILES)
+
+        if bar_form.is_valid():
+            group = UserGroup.objects.get(id=group_id)
+            bar = bar_form.save()
+            group.group_bar.add(bar)
+            group.save()
+            registered = True
+            return redirect('index')
+        else:
+            print(bar_form.errors)
+    else:
+        bar_form = AddBarForm()
+
+    return render(request, 'coffeeorder_app/addBar.html', {'bar_form': bar_form, 'registered': registered})
+
+
+def get_bar(request):
+    pass
+
+
+def delete_bar(request):
+    pass
+
+
+def update_bar(request):
+    pass
+
+# #########ENDBAR###############################
+# #########ORDER LISTS#########################
+
+
+def menu_order_list(request, group_id):
+    group = UserGroup.objects.get(id=group_id)
+
+    return render(request, 'coffeeorder_app/menuOrderList.html',{'group':group,})
+
+
+def add_order_list(request,group_id,bar_id):
+    pass
+
+
+def delete_order_list(request,order_list_id):
+    pass
+
+# ###########END ORDER LIST################
+
+# #############ORDERS#######################
+
+
+def get_order(request,order_id):
+    pass
+
+
+def create_order(request,order_list_id):
+    pass
+
+
+def update_order(request,order_id):
+    pass
+
+
+def delete_order(request,order_id):
+    pass
+
+
+
+# ############END ORDERS ################
+
+
+def get_product(request,product_id):
+    pass
+
+
+def get_product_variation(request,product_variation_id):
+    pass
+
+
+def create_product(request,bar_id=None):
+    pass
+
+
+def create_product_variation(request,product_id):
+    pass
+
+
+def delete_product(request,product_id):
+    pass
+
+
+def delete_product_variation(request,product_variation_id):
+    pass
+
+
+def update_product(request,product_id):
+    pass
+
+
+def update_product_variation(request,product_variation_id):
+    pass

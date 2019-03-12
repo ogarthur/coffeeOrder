@@ -26,5 +26,4 @@ urlpatterns = [
     path('logout/', aviews.user_logout,name='logout'),
     path('account_app/', include('account_app.urls')),
     path('coffeeorder_app/', include('coffeeorder_app.urls')),
-
 ]

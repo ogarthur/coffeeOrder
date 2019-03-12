@@ -86,7 +86,7 @@ def user_login(request):
                 return HttpResponse("Cuenta no activa")
         else:
             print("Someone tried to login and failed")
-            print("Username: {}  with password :{}".format(username,password))
+            print("Username: {} ".format(username))
             return render(request, '{}/login.html'.format(app_name), {'login_error':'Credeenciales no válidos'})
     else:
         return render(request, '{}/login.html'.format(app_name),{})
@@ -101,11 +101,11 @@ def user_logout(request):
 @login_required
 def delete_user(request):
     from django.contrib.auth.models import User
-    print("borrando")
+
     user = User.objects.get(username=request.user.username)
     groups = UserGroup.objects.filter(group_admin=user)
     for group in groups:
-        print(group.group_members)
+
         if group.group_members.count() == 1:
             delete_group(group.id)
     user.delete()
@@ -116,9 +116,9 @@ def delete_user(request):
 @login_required
 def delete_group(request, group_id):
 
-    print("borrando")
+
     group_to_delete = UserGroup.objects.get(id=group_id)
-    print("here")
+
     if is_admin(group_id,request.user.id):
 
         group_to_delete.delete()
@@ -157,7 +157,6 @@ def get_profile(request, user_id):
         'profile_pic': pic.profile_pic,
         'groups_in':groups_in,
     }
-    print(user_data)
 
     return render(request, '{}/userProfile.html'.format(app_name), {'user_data': user_data})
 
@@ -182,15 +181,14 @@ def create_group(request):
             print(group_form.errors)
     else:
         group_form = GroupForm()
-        print("CREADO FORMULARIO")
     return render(request, '{}/creategroup.html'.format(app_name), {'group_form': group_form, 'registered': registered})
+
 
 @login_required
 def getGroupPage(request, group_id):
     group = UserGroup.objects.get(id=group_id)
-
+    print("====x>", group.group_bar.all())
     members = {}
-
 
     for g in group.group_members.all():
 
@@ -204,7 +202,7 @@ def getGroupPage(request, group_id):
             'name' : g.first_name,
             'profile_pic' : pic.profile_pic,
         }
-    print(members)
+
     if group.group_members.filter(pk=request.user.pk).exists():
 
         if is_admin(group_id, request.user.id):
@@ -213,7 +211,10 @@ def getGroupPage(request, group_id):
             print('NO ES ADMIN...')
             admin = False
 
-
-        return render(request, '{}/groupView.html'.format(app_name), {'group': group,'members':members, 'admin': admin})
+        return render(request, '{}/groupView.html'.format(app_name),{
+            'group': group,
+            'members': members,
+            'admin': admin,
+        })
     else:
         return render(request, '{}/groupView.html'.format(app_name), )

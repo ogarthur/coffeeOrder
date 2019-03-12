@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-# Create your models here.
+from coffeeorder_app.model.orderlist import OrderList
+from coffeeorder_app.model.bar import Bar
+# Create your model here.
 PROFILE_PIC_CHOICES = (
     ('256_0.png', '0'),
     ('256_1.png', '1'),
@@ -22,14 +24,17 @@ PROFILE_PIC_CHOICES = (
     ('256_16.png', '16'),
 )
 
+
 class UserProfileInfo(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userInfo")
 
-    profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='0', max_length=100 )
+    profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='0', max_length=100)
     language = models.CharField(max_length=10,
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
+
+    user_order_list= models.ManyToManyField(OrderList, 'OrderList')
 
     def __str__(self):
         return self.user.username
@@ -43,8 +48,11 @@ class UserGroup(models.Model):
     group_color = models.CharField(max_length=100, default="white")
     group_code = models.CharField(max_length=100)
     closed = models.BooleanField(default=False)
+
     group_admin = models.ManyToManyField(User, related_name='groupAdmin')
     group_members = models.ManyToManyField(User, related_name='groupMembers')
+
+    group_bar = models.ManyToManyField(Bar, related_name='group_bar')
 
     def __str__(self):
         return self.group_name

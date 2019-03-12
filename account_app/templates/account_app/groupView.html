@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block head_css_page %}
-    <link href="{% static 'css/coffee.css' %}" rel="stylesheet" media="screen">
+
     <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
 {% endblock head_css_page %}
 {% block content %}
@@ -19,8 +19,10 @@
 
             </div>
             <div class="row">
-                <a role="button" class="btn btn-primary" href="{% url 'account_app:create_group' %}"><span
+                <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:menu_order_list' group.id  %}"><span
                         class="glyphicon glyphicon-plus-sign"></span> CREAR PEDIDO</a>
+                <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:add_bar' group.id  %}"><span
+                        class="glyphicon glyphicon-plus-sign"></span> CREAR BAR</a>
                 <a role="button" class="btn btn-primary" id="inviteToGroup" onclick="show_code()"><span
                         class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
             </div>
@@ -52,8 +54,31 @@
             <div class="col-sm-8">
                 <h2>PEDIDO ACTUAL:</h2>
                 <p>
-                    AQUI SE MUESTRA EL PEDIDO ACTUAL
+                    AQUI SE MUESTRA EL PEDIDO ACTUAL, eliminar bares
+
                 </p>
+                <div class="card-container">
+                    <div class="row"><h2>BARES</h2></div>
+                    <div class="row">
+                    {{ group.group_bar.items }}
+                        {% for bar in group.group_bar.all %}
+                            <div class="col-12 col-md-3 col-lg-2 mt-4 ">
+                                <a href="#">
+                                    <div class="card">
+                                        <div class="card-block" style="background-color:{{ bar.bar_color }};">
+                                            <h4 class="card-title mt-3">{{ bar.bar_name }}</h4>
+                                            <p class="card-text">{{ bar.bar_info}}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div> <!-- card-container -->
+
             </div>
 
         </div> <!-- row -->

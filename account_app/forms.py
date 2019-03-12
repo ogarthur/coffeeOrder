@@ -119,4 +119,4 @@ class JoinGroupForm(forms.Form):
 
     def clean(self):
         all_clean_data = super( JoinGroupForm, self).clean()
-        friend = all_clean_data['group_code']
+        group_code = all_clean_data['group_code']
