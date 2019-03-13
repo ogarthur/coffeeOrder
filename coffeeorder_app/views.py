@@ -19,8 +19,15 @@ def index(request):
     """Funcion que devuelve la vista principal de la página"""
     data = {}
     if request.user.is_authenticated:
+
         groupForm = JoinGroupForm()
         groups = UserGroup.objects.filter(group_members=request.user).values()
+        order_list = []
+
+        for g in groups:
+            orders= OrderList.objects.filter(order_group_id=g['id'])
+            for o in orders:
+                order_list.append(o)
         if request.method == 'POST':
             warning={'0':'Te has unido al grupo!',
                      '1':'Grupo no existente',
@@ -39,22 +46,22 @@ def index(request):
                     print("valid2")
                     if (members+1)<=group_to_join.max_members :
                         if group_to_join.group_members.filter(pk=request.user.pk).exists():
-                            return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['2']})
+                            return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['2'],'order_list':order_list})
                         else:
                             group_to_join.group_members.add(request.user)
 
                             group_to_join.save()
-                            return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['0']})
+                            return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['0'],'order_list':order_list})
                     else:
-                        return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['3']})
+                        return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['3'],'order_list':order_list})
                 else:
-                    return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['1']})
+                    return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['1'],'order_list':order_list})
 
             else:
                 print("form no valid")
-                return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['4']})
+                return render(request, 'coffeeorder_app/home.html', {'groups': groups, 'join_group_form': groupForm, 'warning': warning['4'],'order_list':order_list})
         else:
-            return render(request, 'coffeeorder_app/home.html', {'groups':groups, 'join_group_form': groupForm, })
+            return render(request, 'coffeeorder_app/home.html', {'groups':groups, 'join_group_form': groupForm,'order_list':order_list})
 
     else:
         print("NO LOGEADO")
@@ -115,17 +122,17 @@ def add_order_list(request, group_id, bar_id):
     bar = Bar.objects.get(id=bar_id)
     group = UserGroup.objects.get(id=group_id)
 
-    if not OrderList.objects.filter(order_bar=bar):
+    #if not OrderList.objects.filter(order_group =group):
+    print("HERE")
+    order_list = OrderList()
+    time_created = datetime.today()
+    time_expiration = time_created + timedelta(hours=2)
+    order_list.created = time_created
+    order_list.expiration = time_expiration
 
-        order_list = OrderList()
-        time_created = datetime.today()
-        time_expiration = time_created + timedelta(hours=2)
-        order_list.created = time_created
-        order_list.expiration = time_expiration
-
-        order_list.order_bar = bar
-        order_list.order_group = group
-        order_list.save()
+    order_list.order_bar = bar
+    order_list.order_group = group
+    order_list.save()
 
     return redirect('coffeeorder_app:menu_order_list', group_id)
 

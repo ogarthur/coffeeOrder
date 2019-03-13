@@ -64,7 +64,8 @@
                                     <div class="card">
                                         <div class="card-block" style="background-color:{{ bar.bar_color }};">
                                             <h4 class="card-title mt-3">PEDIDO:{{ order.order_bar.bar_name| default:""}}</h4>
-                                            <p class="card-text">Creado:{{ order.created}}</p>
+                                             <h2 class="card-title mt-3">GRUPO:{{order.order_group.group_name }}</h2>
+                                            <p class="card-text">{{ order.created}}</p>
                                             <p class="card-text">{{ order.total_prize }} €</p>
 
 
