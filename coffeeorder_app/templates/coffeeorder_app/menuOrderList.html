@@ -7,26 +7,21 @@
 
 <div class="jumbotron text-center">
 
-  {% if registered %}
-    <h1>Lista creada</h1>
 
-  {% else %}
   <h1>Crear nueva lista de pedidos</h1>
-  {% endif %}
+
 </div>
 
-{% if not registered %}
-    <div class="container-fluid">
-        <div class="row">
 
-            <div class="col-sm-8">
+    <div id="listmenu"class="container-fluid">
+        <div class="row">
                 <h2>Seleccione un bar:</h2>
                 <div class="card-container">
-                    <div class="row"><h2>BARES</h2></div>
+                    <div class="row"><h2>PRODUCTS</h2></div>
                     <div class="row">
                     {{ group.group_bar.items }}
                         {% for bar in group.group_bar.all %}
-                            <div class="col-12 col-md-3 col-lg-2 mt-4 ">
+                            <div class="col-12 col-md-3 col-lg-3 mt-4 ">
                                 <a href="#">
                                     <div class="card">
                                         <div class="card-block" style="background-color:{{ bar.bar_color }};">
@@ -42,14 +37,12 @@
                         {% endfor %}
                     </div>
                 </div> <!-- card-container -->
-            </div>
+
 
         </div> <!-- row -->
 
     </div> <!-- container-->
-{% else %}
-  <a role="button" class="btn btn-primary"  style='margin: 5% 50%;' href="{% url 'index' %}">INICIO</a>
-{% endif %}
+
 {% endblock %}
 {% block footer_javascript_page %}
 {% endblock footer_javascript_page %}

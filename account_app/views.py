@@ -96,7 +96,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return redirect('index')
 
 @login_required
 def delete_user(request):
@@ -110,7 +110,7 @@ def delete_user(request):
             delete_group(group.id)
     user.delete()
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return redirect('index')
 
 
 @login_required
@@ -134,7 +134,7 @@ def delete_user_from_group(request, group_id, user_id):
         group.group_admin.remove(user_to_delete)
         group.group_members.remove(user_to_delete)
     response = '/account_app/group/{}'.format(group.id)
-    return redirect(response )
+    return redirect(response)
 
 
 @login_required

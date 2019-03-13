@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import redirect
-
+from django.urls import reverse
 from account_app.forms import JoinGroupForm
-from .forms import AddBarForm
+from .forms import AddBarForm, AddProductForm, AddProductVariationForm
 
 from account_app.models import UserGroup
 
@@ -63,7 +63,7 @@ def add_bar(request, group_id):
     registered = False
     if request.method == "POST":
 
-        bar_form = AddBarForm(request.POST, request.FILES)
+        bar_form = AddBarForm(request.POST)
 
         if bar_form.is_valid():
             group = UserGroup.objects.get(id=group_id)
@@ -131,7 +131,7 @@ def delete_order(request,order_id):
 
 
 # ############END ORDERS ################
-
+# ############PRODUCTS   ################
 
 def get_product(request,product_id):
     pass
@@ -141,13 +141,41 @@ def get_product_variation(request,product_variation_id):
     pass
 
 
-def create_product(request,bar_id=None):
+def add_product(request):
+
+    if request.method == "POST":
+        product_form = AddProductForm(request.POST)
+        product_variation_form = AddProductVariationForm(request.POST)
+        if product_form.is_valid() and product_variation_form.is_valid():
+            product = product_form.save()
+            if product_variation_form.cleaned_data['product_variation_name'] != "NONE" and product_variation_form.cleaned_data['product_variation_name'] !=" " :
+
+                product_variation = product_variation_form
+                product_variation.product_variation_product = product
+                product_variation.save()
+
+            return redirect('coffeeorder_app:add_product')
+
+        elif product_form.is_valid():
+            product_form.save()
+            return redirect('coffeeorder_app:add_product')
+        else:
+            print(product_form.errors)
+    else:
+        product_form = AddProductForm()
+        product_variation_form = AddProductVariationForm()
+    return render(request, 'coffeeorder_app/addProduct.html', {
+        'product_form': product_form,
+        'product_variation_form': product_variation_form,
+    })
+
+
+
+def add_product_variation(request,product_id):
     pass
 
-
-def create_product_variation(request,product_id):
+def assignate_product_to_bar(request,group_id, bar_id, product_id, product_variation_id):
     pass
-
 
 def delete_product(request,product_id):
     pass

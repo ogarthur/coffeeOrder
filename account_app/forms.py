@@ -19,7 +19,7 @@ class UserForm(forms.ModelForm):
             msg = "Las contraseñas no coinciden"
             self.add_error('password', msg)
 
-    class Meta():
+    class Meta:
         model = User
         msg_required = "Campo obligatorio"
         fields = (
@@ -45,7 +45,6 @@ class UserForm(forms.ModelForm):
             'confirm_password':    _('Repita contraseña :'),
         }
         help_texts = {
-            'username': _('longitud mínima 6 cáracteres'),
             'first_name': _('No es obligatorio'),
             'last_name': _('No es obligatorio'),
         }
@@ -70,6 +69,8 @@ class UserForm(forms.ModelForm):
                     'email':forms.EmailInput(attrs={'class':'form-control',}),
 
                 }
+
+
 class UserProfileForm(forms.ModelForm):
     """ Clase formulario detalles adicionales sobre el usuario"""
 
@@ -79,16 +80,14 @@ class UserProfileForm(forms.ModelForm):
         fields = ('profile_pic',)
 
         labels = {
-
                 'profile_pic': _('Imagen de perfil:'),
-
                 }
         help_texts = {
-
         }
         widgets = {
 
         }
+
 
 class GroupForm(forms.ModelForm):
     """ FORMULARIO PARA CREAR GRUPOS"""

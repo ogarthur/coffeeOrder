@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_css_section %}
+  <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_section %}
+{% block content %}
+
+<div class="jumbotron text-center">
+  <h1>Añadir nuevo producto</h1>
+</div>
+
+
+
+<div class="container-fluid ">
+  <div class="container-fluid registration-container col-md-6 col-md-offset-3">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h2>Datos del producto:</h2>
+        <form enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          {% for field in product_form %}
+          <div class="form-group">
+            <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <p>{{ field.errors }}{{ forms.non_field_errors }}</p>
+          {% endif %}
+            {% if field.help_text %}
+            <small  class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+        {% for field in  product_variation_form %}
+          <div class="form-group">
+            <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <p>{{ field.errors }}{{ forms.non_field_errors }}</p>
+          {% endif %}
+            {% if field.help_text %}
+            <small  class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+          <div class="text-center">
+            <input class="btn btn-primary" type="submit" name="" value="CREAR PRODUCTO" />
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+{% endblock %}
+{% block footer_javascript_page %}
+
+
+{% endblock footer_javascript_page %}

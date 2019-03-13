@@ -29,7 +29,7 @@ class UserProfileInfo(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userInfo")
 
-    profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='0', max_length=100)
+    profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='256_0.png', max_length=100)
     language = models.CharField(max_length=10,
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
