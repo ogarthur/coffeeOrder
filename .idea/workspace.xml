@@ -5,22 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62abbd1a-a52c-46d1-b0c2-c9a3cab382f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/templates/account_app/groupView.html" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/templates/account_app/groupView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/account_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/model/orderlist.py" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/model/orderlist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/model/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/model/product.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/static/css/coffee.css" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/static/css/coffee.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/coffeeorder_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/coffeeorder_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,8 +26,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="807">
-              <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="467">
+              <caret line="41" column="45" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="66" column="15" selection-start-line="66" selection-start-column="15" selection-end-line="66" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -69,18 +65,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/account_app/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/account_app/templates/account_app/groupView.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-278">
@@ -92,7 +76,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="255">
               <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
             </state>
           </provider>
@@ -110,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coffeeorder_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
+            <state relative-caret-position="170">
+              <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
                 <element signature="e#2915#3462#0" />
@@ -237,7 +221,6 @@
         <option value="$PROJECT_DIR$/static/js/color-picker.js" />
         <option value="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/addOrderList.html" />
         <option value="$PROJECT_DIR$/static/css/basic.css" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/coffeeorder_app/model/bar.py" />
         <option value="$PROJECT_DIR$/coffeeorder_app/admin.py" />
         <option value="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/addProduct.html" />
@@ -252,8 +235,9 @@
         <option value="$PROJECT_DIR$/account_app/views.py" />
         <option value="$PROJECT_DIR$/account_app/templates/account_app/groupView.html" />
         <option value="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html" />
-        <option value="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html" />
         <option value="$PROJECT_DIR$/coffeeorder_app/views.py" />
+        <option value="$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
       </list>
     </option>
   </component>
@@ -299,49 +283,6 @@
               <item name="account_app" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="account_app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coffeeorder" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="coffeeorder_app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="coffeeorder" type="b2602c69:ProjectViewProjectNode" />
@@ -441,19 +382,19 @@
       <workItem from="1552383298141" duration="10711000" />
       <workItem from="1552421357632" duration="3414000" />
       <workItem from="1552435305226" duration="7402000" />
-      <workItem from="1552477918666" duration="10233000" />
+      <workItem from="1552477918666" duration="11214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104087000" />
+    <option name="totallyTimeSpent" value="105068000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.5007704" side_tool="true" weight="0.12526652" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49922958" visible="true" weight="0.12579957" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49922958" visible="true" weight="0.12579957" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.31983384" />
@@ -463,7 +404,7 @@
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32502595" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.32398754" />
+      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.32398754" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -604,13 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="901">
           <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -771,16 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coffeeorder_app/model/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="15" />
-          <folding>
-            <element signature="e#24#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/coffeeorder_app/model/orderlist.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -791,24 +715,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/account_app/templates/account_app/groupView.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-278">
           <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="807">
-          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>
@@ -836,8 +746,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/coffeeorder_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
+        <state relative-caret-position="170">
+          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
             <element signature="e#2915#3462#0" />
@@ -845,6 +755,37 @@
             <element signature="e#3527#3531#0" />
             <element signature="e#4467#5585#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coffeeorder_app/model/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="15" />
+          <folding>
+            <element signature="e#24#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coffeeorder_app/templates/coffeeorder_app/menuOrderList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="41" column="45" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="66" column="15" selection-start-line="66" selection-start-column="15" selection-end-line="66" selection-end-column="15" />
         </state>
       </provider>
     </entry>

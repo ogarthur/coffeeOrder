@@ -21,6 +21,7 @@
 
                 <div class="card-container">
                     <div class="row">
+                    <div class="col-12"><h1> OFICIALES:</h1></div>
                         {% for bar in official_bar.all %}
                             <div class="col-12 col-md-3 col-lg-3 mt-4 ">
                                 <a href="{% url 'coffeeorder_app:add_order_list' group.id bar.id %}">
@@ -36,8 +37,11 @@
                                 </a>
                             </div>
                         {% endfor %}
+                     </div>
+                 <div class="row">
+                 <div class="col-12"><h1> NO OFICIALES:</h1></div>
                         {% for bar in group.group_bar.all %}
-                            {% if bar not in offical_bar %}
+
                             <div class="col-12 col-md-3 col-lg-3 mt-4 ">
                                 <a href="{% url 'coffeeorder_app:add_order_list' group.id bar.id %}">
                                     <div class="card">
@@ -51,7 +55,7 @@
                                     </div>
                                 </a>
                             </div>
-                            {% endif %}
+
                         {% endfor %}
                     </div>
                 </div> <!-- card-container -->
