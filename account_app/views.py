@@ -7,12 +7,13 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from datetime import datetime
 
 from .forms import UserForm, UserProfileForm, GroupForm
 from .models import UserProfileInfo, UserGroup
+from coffeeorder_app.model.orderlist import OrderList
 from django.contrib.auth.models import User
 import random, string
 
@@ -22,8 +23,7 @@ app_name = 'account_app'
 
 
 
-##########################################REGISTRO/LOGIN##################################################
-#REGISTRO
+# #################USER##################
 
 def is_admin(group_id,user_id):
     group = UserGroup.objects.get(id=group_id)
@@ -113,17 +113,6 @@ def delete_user(request):
     return redirect('index')
 
 
-@login_required
-def delete_group(request, group_id):
-
-
-    group_to_delete = UserGroup.objects.get(id=group_id)
-
-    if is_admin(group_id,request.user.id):
-
-        group_to_delete.delete()
-
-    return redirect('index')
 
 @login_required
 def delete_user_from_group(request, group_id, user_id):
@@ -136,6 +125,19 @@ def delete_user_from_group(request, group_id, user_id):
     response = '/account_app/group/{}'.format(group.id)
     return redirect(response)
 
+# ###########ENDUSER###########################
+# ##########group###############
+@login_required
+def delete_group(request, group_id):
+
+
+    group_to_delete = UserGroup.objects.get(id=group_id)
+
+    if is_admin(group_id,request.user.id):
+
+        group_to_delete.delete()
+
+    return redirect('index')
 
 @login_required
 def abandon_group(request, group_id):
@@ -185,9 +187,8 @@ def create_group(request):
 
 
 @login_required
-def getGroupPage(request, group_id):
+def get_group_page(request, group_id):
     group = UserGroup.objects.get(id=group_id)
-    print("====x>", group.group_bar.all())
     members = {}
 
     for g in group.group_members.all():
@@ -197,11 +198,13 @@ def getGroupPage(request, group_id):
         pic = UserProfileInfo.objects.get(user=user)
 
         members[g.id]= {
-
             'username' : g.username,
             'name' : g.first_name,
-            'profile_pic' : pic.profile_pic,
+            'profile_pic': pic.profile_pic,
         }
+
+
+        order_list = OrderList.objects.filter(order_group=group)
 
     if group.group_members.filter(pk=request.user.pk).exists():
 
@@ -215,6 +218,31 @@ def getGroupPage(request, group_id):
             'group': group,
             'members': members,
             'admin': admin,
+            'order_list':order_list,
+
         })
     else:
         return render(request, '{}/groupView.html'.format(app_name), )
+
+
+
+
+
+@login_required
+def close_group(request, group_id):
+    group = UserGroup.objects.get(id=group_id)
+    if is_admin(group_id, request.user.id):
+        if group.closed:
+            print("IS OPEN")
+            group.closed = False
+            group.save()
+        else:
+            print("IS NO OPEN")
+            group.closed = True
+            print(group.closed)
+            group.save()
+    data = {
+        'is_closed': group.closed
+    }
+    return JsonResponse(data)
+# ##########END GROUP###################

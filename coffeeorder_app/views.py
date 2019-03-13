@@ -6,9 +6,14 @@ from django.urls import reverse
 from account_app.forms import JoinGroupForm
 from .forms import AddBarForm, AddProductForm, AddProductVariationForm
 
+from datetime import datetime, timedelta
+from .model.orderlist import OrderList
+from .model.bar import Bar
 from account_app.models import UserGroup
 
 # Create your views here.
+
+# #########BAR###############################
 
 def index(request):
     """Funcion que devuelve la vista principal de la página"""
@@ -58,7 +63,7 @@ def index(request):
 
 
 # #########BAR###############################
-
+@login_required
 def add_bar(request, group_id):
     registered = False
     if request.method == "POST":
@@ -80,32 +85,53 @@ def add_bar(request, group_id):
     return render(request, 'coffeeorder_app/addBar.html', {'bar_form': bar_form, 'registered': registered})
 
 
+@login_required
 def get_bar(request):
     pass
 
 
+@login_required
 def delete_bar(request):
     pass
 
 
+@login_required
 def update_bar(request):
     pass
 
 # #########ENDBAR###############################
 # #########ORDER LISTS#########################
 
-
+@login_required
 def menu_order_list(request, group_id):
     group = UserGroup.objects.get(id=group_id)
+    official_bar = Bar.objects.filter( bar_official=True)
 
-    return render(request, 'coffeeorder_app/menuOrderList.html',{'group':group,})
-
-
-def add_order_list(request,group_id,bar_id):
-    pass
+    return render(request, 'coffeeorder_app/menuOrderList.html', {'group': group, 'official_bar': official_bar})
 
 
-def delete_order_list(request,order_list_id):
+@login_required
+def add_order_list(request, group_id, bar_id):
+    bar = Bar.objects.get(id=bar_id)
+    group = UserGroup.objects.get(id=group_id)
+
+    if not OrderList.objects.filter(order_bar=bar):
+
+        order_list = OrderList()
+        time_created = datetime.today()
+        time_expiration = time_created + timedelta(hours=2)
+        order_list.created = time_created
+        order_list.expiration = time_expiration
+
+        order_list.order_bar = bar
+        order_list.order_group = group
+        order_list.save()
+
+    return redirect('coffeeorder_app:menu_order_list', group_id)
+
+
+@login_required
+def delete_order_list(request, order_list_id):
     pass
 
 # ###########END ORDER LIST################
@@ -113,19 +139,23 @@ def delete_order_list(request,order_list_id):
 # #############ORDERS#######################
 
 
-def get_order(request,order_id):
+@login_required
+def get_order(request, order_id):
     pass
 
 
-def create_order(request,order_list_id):
+@login_required
+def create_order(request, order_list_id):
     pass
 
 
-def update_order(request,order_id):
+@login_required
+def update_order(request, order_id):
     pass
 
 
-def delete_order(request,order_id):
+@login_required
+def delete_order(request, order_id):
     pass
 
 
@@ -133,14 +163,18 @@ def delete_order(request,order_id):
 # ############END ORDERS ################
 # ############PRODUCTS   ################
 
-def get_product(request,product_id):
+
+@login_required
+def get_product(request, product_id):
     pass
 
 
-def get_product_variation(request,product_variation_id):
+@login_required
+def get_product_variation(request, product_variation_id):
     pass
 
 
+@login_required
 def add_product(request):
 
     if request.method == "POST":
@@ -170,24 +204,31 @@ def add_product(request):
     })
 
 
-
-def add_product_variation(request,product_id):
-    pass
-
-def assignate_product_to_bar(request,group_id, bar_id, product_id, product_variation_id):
-    pass
-
-def delete_product(request,product_id):
+@login_required
+def add_product_variation(request, product_id):
     pass
 
 
-def delete_product_variation(request,product_variation_id):
+@login_required
+def assignate_product_to_bar(request, group_id, bar_id, product_id, product_variation_id):
     pass
 
 
-def update_product(request,product_id):
+@login_required
+def delete_product(request, product_id):
     pass
 
 
-def update_product_variation(request,product_variation_id):
+@login_required
+def delete_product_variation(request, product_variation_id):
+    pass
+
+
+@login_required
+def update_product(request, product_id):
+    pass
+
+
+@login_required
+def update_product_variation(request, product_variation_id):
     pass

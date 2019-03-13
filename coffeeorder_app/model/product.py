@@ -9,13 +9,12 @@ PRODUCT_CHOICES = (
 )
 
 
-
 class Product(models.Model):
     class Meta:
         pass
 
     product_name = models.CharField(max_length=100, unique=True)
-    product_color= models.CharField(max_length=100, default="white")
+    product_color = models.CharField(max_length=100, default="white")
     product_type = models.CharField(choices=PRODUCT_CHOICES, max_length=50)
     product_bar = models.ManyToManyField(Bar, related_name='product_bar')
 

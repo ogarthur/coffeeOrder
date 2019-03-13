@@ -45,8 +45,8 @@ class UserForm(forms.ModelForm):
             'confirm_password':    _('Repita contraseña :'),
         }
         help_texts = {
+            'username': _(''),
             'first_name': _('No es obligatorio'),
-            'last_name': _('No es obligatorio'),
         }
         error_messages = {
             'username': {

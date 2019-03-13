@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-from coffeeorder_app.model.orderlist import OrderList
+
 from coffeeorder_app.model.bar import Bar
+
+
 # Create your model here.
 PROFILE_PIC_CHOICES = (
     ('256_0.png', '0'),
@@ -33,8 +35,6 @@ class UserProfileInfo(models.Model):
     language = models.CharField(max_length=10,
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
-
-    user_order_list= models.ManyToManyField(OrderList, 'OrderList')
 
     def __str__(self):
         return self.user.username
