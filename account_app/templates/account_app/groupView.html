@@ -16,12 +16,12 @@
             <div class="row">
 
 
-
             </div>
             <div class="row">
-                <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:menu_order_list' group.id  %}"><span
+                <a role="button" class="btn btn-primary"
+                   href="{% url 'coffeeorder_app:menu_order_list' group.id %}"><span
                         class="glyphicon glyphicon-plus-sign"></span> CREAR PEDIDO</a>
-                <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:add_bar' group.id  %}"><span
+                <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:add_bar' group.id %}"><span
                         class="glyphicon glyphicon-plus-sign"></span> CREAR BAR</a>
                 <a role="button" class="btn btn-primary" id="inviteToGroup" onclick="show_code()"><span
                         class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
@@ -32,11 +32,11 @@
                 <a role="button" class="btn btn-danger" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR
                     GRUPO</a>
                 {% if admin %}
-                <a role="button" class="btn btn-danger"
-                   href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
-                <a role="button" id="close_button" class="btn btn-warning" onclick="close_group_button()">
-                    {% if group.closed %}ABRIR{% else %}CERRAR{% endif %} GRUPO</a>
-                    {% endif %}
+                    <a role="button" class="btn btn-danger"
+                       href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
+                    <a role="button" id="close_button" class="btn btn-warning" onclick="close_group_button()">
+                        {% if group.closed %}ABRIR{% else %}CERRAR{% endif %} GRUPO</a>
+                {% endif %}
             </div>
             <div class="row " id="invitationContainer">
                 <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
@@ -53,37 +53,41 @@
         <div class="row">
 
 
-                <h2>PEDIDO ACTUAL:</h2>
+            <h2>PEDIDOS</h2>
 
-                    <div class="card-container col-12">
-                        <div class="row">
-                        {% for order in order_list.all %}
-
-                            <div class="col-12 col-md-6  col-lg-3 mt-4">
-                                <a href="#">
-                                    <div class="card">
-                                        <div class="card-block" style="background-color:{{ bar.bar_color }};">
-                                            <h4 class="card-title mt-3">PEDIDO:{{ order.order_bar.bar_name| default:""}}</h4>
-                                             <h2 class="card-title mt-3">GRUPO:{{order.order_group.group_name }}</h2>
-                                            <p class="card-text">{{ order.created}}</p>
-                                            <p class="card-text">{{ order.total_prize }} €</p>
-
-
-                                        </div>
+            <div class="card-container col-12">
+                <div class="row">
+                    {% for order in order_list.all %}
+                        <div class="col-12 col-md-6  col-lg-3 mt-4">
+                            <a href="#">
+                                <div class="card">
+                                    <div class="card-block" style="background-color:{{ bar.bar_color }};">
+                                        <h4 class="card-title mt-3">
+                                            PEDIDO:{{ order.order_bar.bar_name| default:"" }}</h4>
+                                        <h2 class="card-title mt-3">GRUPO:{{ order.order_group.group_name }}</h2>
+                                        <p class="card-text">{{ order.created }}</p>
+                                        <p class="card-text">{{ order.total_prize }} €</p>
                                         <div class="card-footer">
-                                            <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                            {% if admin %}
+                                                <a class="btn  float-right btn-sm btn-danger"
+                                                   href="{% url 'coffeeorder_app:delete_order_list' group.id order.id %}">ELIMINAR PEDIDO</a>
+                                            {% else %}
+                                                <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                            {% endif %}
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                   </div>
-                </div> <!-- card-container -->
-        <div class="col-12">
-                    <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:menu_order_list' group.id  %}"><span
+                                 </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div> <!-- card-container -->
+            <div class="col-12">
+                <a role="button" class="btn btn-primary"
+                   href="{% url 'coffeeorder_app:menu_order_list' group.id %}"><span
                         class="glyphicon glyphicon-plus-sign"></span> CREAR PEDIDO</a>
 
-</div>
+            </div>
 
         </div> <!-- row -->
 
@@ -91,36 +95,36 @@
 
     <div class="container-fluid bg-grey">
 
-              {% if user.is_authenticated and group %}
-                <div class="row"> <h2 >MIEMBROS</h2></div>
+        {% if user.is_authenticated and group %}
+            <div class="row"><h2>MIEMBROS</h2></div>
 
-                <div class="row card-container">
-                    {% for key,member in members.items %}
-                        <div class="col-6 col-md-4 col-lg-3 mt-4">
-                            <div class="card">
-                                <img class="card-img-top"
-                                     src="{% static 'images/profile_pics/' %}{{ member.profile_pic }}">
-                                <div class="card-block">
-                                    <h4 class="card-title mt-3">{{ member.username }}</h4>
-                                </div>
+            <div class="row card-container">
+                {% for key,member in members.items %}
+                    <div class="col-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="{% static 'images/profile_pics/' %}{{ member.profile_pic }}">
+                            <div class="card-block">
+                                <h4 class="card-title mt-3">{{ member.username }}</h4>
+                            </div>
                             {% if admin and key != request.user.id %}
                                 <div class="card-footer">
-                                        <a class="btn  float-right btn-sm btn-danger"
-                                           href="{% url 'account_app:delete_from_group' group.id key %}">ELIMINAR</a>
+                                    <a class="btn  float-right btn-sm btn-danger"
+                                       href="{% url 'account_app:delete_from_group' group.id key %}">ELIMINAR</a>
 
                                 </div>
-                         {% endif %}
+                            {% endif %}
                         </div>
 
                     </div>
-                    {% endfor %}
-                </div> <!-- row -->
-            {% else %}
-                <a type="button" class="btn btn-lg btn-default" href="#"><span
-                        class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
-            {% endif %}
+                {% endfor %}
+            </div> <!-- row -->
+        {% else %}
+            <a type="button" class="btn btn-lg btn-default" href="#"><span
+                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+        {% endif %}
 
-        </div> <!-- row -->
+    </div> <!-- row -->
     </div> <!-- container-->
 
 
@@ -132,23 +136,22 @@
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/coffee.js' %}"></script>
         <script>
-       function close_group_button() {
+            function close_group_button() {
 
-                 $.ajax({
+                $.ajax({
                     url: "{% url 'account_app:close_group' group.id %}",
 
                     dataType: 'json',
                     success: function (data) {
-                      if (data.is_closed) {
-                        $("#close_button").text("ABRIR GRUPO")
+                        if (data.is_closed) {
+                            $("#close_button").text("ABRIR GRUPO")
 
-                      }
-                      else{
-                          $("#close_button").text("CERRAR GRUPO")
+                        } else {
+                            $("#close_button").text("CERRAR GRUPO")
 
-                      }
+                        }
                     }
-                  });
+                });
             };
         </script>
     {% endblock footer_javascript_page %}
