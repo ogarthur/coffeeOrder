@@ -12,8 +12,8 @@ class OrderList(models.Model):
     class Meta:
         pass
 
-    created = models.DateField(blank=True)
-    expiration = models.DateField(blank=True)
+    created = models.DateTimeField(blank=True)
+    expiration = models.DateTimeField(blank=True)
 
     total_prize = models.IntegerField(default=0)
 

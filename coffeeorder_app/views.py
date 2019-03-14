@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.db.models import Q
 # 3rd
 from datetime import datetime, timedelta
 
@@ -136,6 +137,17 @@ def delete_order_list(request, group_id, order_list_id):
     response = '/account_app/group/{}'.format(group_id)
     return redirect(response)
 
+
+def check_order(request):
+    today = datetime.today()
+
+    orders = OrderList.objects.filter(Q(expiration__lte=today))
+
+    for o in orders:
+
+        o.delete()
+    print("CHECKEANDO SI HAY QUE ELIMINARs")
+    return redirect(index)
 # ###########END ORDER LIST################
 # #############ORDERS#######################
 
