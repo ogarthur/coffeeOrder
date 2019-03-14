@@ -6,15 +6,13 @@
 {% block content %}
 
 <div class="jumbotron text-center">
-  {% if registered %}
-    <h1>Lista creada</h1>
 
-  {% else %}
-  <h1>Crear nueva lista de pedidos</h1>
-  {% endif %}
+    <h1>PEDIDO</h1>
+
+</div>
+<div class="container-fluid"><!--
 </div>
 
-{% if registered == False %}
     <div class="container-fluid">
         <div class="row">
 
@@ -46,9 +44,7 @@
         </div> <!-- row -->
 
     </div> <!-- container-->
-{% else %}
-  <a role="button" class="btn btn-primary"  style='margin: 5% 50%;' href="{% url 'index' %}">INICIO</a>
-{% endif %}
+
 {% endblock %}
 {% block footer_javascript_page %}
 {% endblock footer_javascript_page %}

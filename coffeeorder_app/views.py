@@ -117,15 +117,25 @@ def menu_order_list(request, group_id):
 def add_order_list(request, group_id, bar_id):
     bar = Bar.objects.get(id=bar_id)
     group = UserGroup.objects.get(id=group_id)
+    orders = OrderList.objects.filter(order_group=group)
+    free = True
 
-    order_list = OrderList()
-    time_created = datetime.today()
-    time_expiration = time_created + timedelta(hours=2)
-    order_list.created = time_created
-    order_list.expiration = time_expiration
-    order_list.order_bar = bar
-    order_list.order_group = group
-    order_list.save()
+    for checkorder in orders:
+        print("BAR", bar == checkorder.order_bar )
+        print("GROUP",group ==checkorder.order_group)
+        if bar == checkorder.order_bar and group == checkorder.order_group:
+            free = False
+            break;
+    print("FINAL",free)
+    if free:
+        order_list = OrderList()
+        time_created = datetime.today()
+        time_expiration = time_created + timedelta(hours=2)
+        order_list.created = time_created
+        order_list.expiration = time_expiration
+        order_list.order_bar = bar
+        order_list.order_group = group
+        order_list.save()
 
     response = '/account_app/group/{}'.format(group_id)
     return redirect(response)

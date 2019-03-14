@@ -218,7 +218,7 @@ def get_group_page(request, group_id):
             'group': group,
             'members': members,
             'admin': admin,
-            'order_list':order_list,
+            'order_list': order_list,
 
         })
     else:
