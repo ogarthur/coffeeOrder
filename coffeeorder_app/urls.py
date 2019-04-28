@@ -1,14 +1,16 @@
 from django.contrib import admin
-from django.urls import path,include
-from coffeeorder_app import views
-#template tag
+from django.urls import path, include
+from coffeeorder_app.views import bar_views, order_views, product_views, views
+
 app_name = 'coffeeorder_app'
 
 urlpatterns = [
-    path('<int:group_id>/addbar/', views.add_bar, name='add_bar'),
-    path('<int:group_id>/menuorderlist/', views.menu_order_list, name='menu_order_list'),
-    path('<int:group_id>/addorderlist/<int:bar_id>', views.add_order_list, name='add_order_list'),
-    path('<int:group_id>/deleteorderlist/<int:order_list_id>', views.delete_order_list, name='delete_order_list'),
-    path('addproduct/', views.add_product, name='add_product'),
-    path('check_order', views.check_order, name="check_order"),
+    path('<int:group_id>/addbar/', bar_views.add_bar, name='add_bar'),
+    path('<int:group_id>/menuorderlist/', order_views.menu_order_list, name='menu_order_list'),
+    path('<int:group_id>/addorderlist/<int:bar_id>', order_views.add_order_list, name='add_order_list'),
+    path('<int:group_id>/deleteorderlist/<int:order_list_id>', order_views.delete_order_list, name='delete_order_list'),
+    path('addproduct/', product_views.add_product, name='add_product'),
+    path('<int:group_id>/addproductbar/<int:bar_id>', product_views.add_product_bar, name='views.add_product_bar'),
+    path('addorder/<int:order_list_id>', order_views.add_order, name='add_order'),
+    path('checkorder', order_views.check_order, name="check_order"),
 ]

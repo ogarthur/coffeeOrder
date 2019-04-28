@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="card-container ">
+        <div class="row"><h2>LISTA DE PEDIDOS</h2></div>
+        <div class="row">
+            {% for order in order_list %}
+                <div class="col-12 col-md-6  col-lg-3 mt-4">
+                    <a href="#">
+                        <div class="card">
+                            <div class="card-block" style="background-color:{{ bar.bar_color }};">
+                                <h2 class="card-title mt-3">BAR:{{ order.order_bar.bar_name| default:"" }}</h2>
+                                <h2 class="card-title mt-3">GRUPO:{{ order.order_group.group_name }}</h2>
+                                <p class="card-text">{{ order.created }}</p>
+                                <p class="card-text card-prize">{{ order.total_prize }} €</p>
+                            </div>
+                            <div class="card-footer">
+                                {% if admin %}
+                                    <a class="btn  float-right btn-sm btn-danger"
+                                       href="{% url 'coffeeorder_app:delete_order_list' group.id order.id %}">ELIMINAR</a>
+                                {% else %}
+                                    <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div> <!-- card-container -->
+</div> <!-- container-->

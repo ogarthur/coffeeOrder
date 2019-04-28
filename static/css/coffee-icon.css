@@ -59,7 +59,9 @@ svg:not(:root) {
             transform-origin: 50% 80%;
 }
 
-
+.coffee-home{
+    max-width: 70px!important;
+}
 
 @media (max-width: 599px) {
     .main {

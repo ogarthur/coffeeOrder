@@ -1,34 +1,39 @@
-{% extends 'base.html' %}
+{% extends "coffeeorder_app/base.html" %}
 {% load staticfiles %}
 {% block head_css_section %}
-  <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
 {% endblock head_css_section %}
 {% block content %}
 
-<div class="jumbotron text-center">
+    <div class="jumbotron text-center">
+        <h1>PEDIDO</h1>
+    </div>
+    <div class="container-fluid" id="single-order">
+        AQUI SE MUESTRA EL PEDIDO DEL USUARIO
+    </div>
+    <div class="container-fluid" id="p">
+        AQUI SE MUESTRAN LAS BEBIDAS DISPONIBLES
+    </div>
+    <div class="container-fluid" id="p">
+        AQUI SE MUESTRAN LOS COMBESTIBLES DISPONIBLES
+    </div>
 
-    <h1>PEDIDO</h1>
-
-</div>
-<div class="container-fluid"><!--
-</div>
 
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-sm-8">
                 <h2>Seleccione un bar:</h2>
                 <div class="card-container">
                     <div class="row"><h2>BARES</h2></div>
                     <div class="row">
-                    {{ group.group_bar.items }}
+                        {{ group.group_bar.items }}
                         {% for bar in group.group_bar.all %}
                             <div class="col-12 col-md-3 col-lg-2 mt-4 ">
                                 <a href="#">
                                     <div class="card">
                                         <div class="card-block" style="background-color:{{ bar.bar_color }};">
                                             <h4 class="card-title mt-3">{{ bar.bar_name }}</h4>
-                                            <p class="card-text">{{ bar.bar_info}}</p>
+                                            <p class="card-text">{{ bar.bar_info }}</p>
                                         </div>
                                         <div class="card-footer">
                                             <img class="card-logo" src="/static/images/svgs/1coffee.svg">
@@ -40,11 +45,8 @@
                     </div>
                 </div> <!-- card-container -->
             </div>
-
         </div> <!-- row -->
-
     </div> <!-- container-->
-
 {% endblock %}
 {% block footer_javascript_page %}
 {% endblock footer_javascript_page %}

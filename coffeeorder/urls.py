@@ -19,7 +19,7 @@ from django.urls import path, include
 
 
 from account_app import views as aviews
-from coffeeorder_app import views as cviews
+from coffeeorder_app.views import views as cviews
 urlpatterns = [
     path('', cviews.index, name='index'),
     path('admin/', admin.site.urls),

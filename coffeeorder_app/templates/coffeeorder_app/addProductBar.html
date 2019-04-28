@@ -1,0 +1,26 @@
+{% extends "coffeeorder_app/base.html" %}
+{% load staticfiles %}
+{% block head_css_section %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+{% endblock head_css_section %}
+{% block content %}
+
+    <div class="jumbotron text-center">
+        <h1>AÑADIR PRODUCTO AL BAR</h1>
+    </div>
+    <div class="container-fluid">
+        FORMULARIO PRODUCTO + FORMULARIO PRODUCTO BAR(SE MOSTRARA AL USUARIO UN BUSCADOR DE PRODUCTOS
+    </div>
+    <div class="container-fluid" hidden>
+        FORMULARIO PRODUCTO + FORMULARIO PRODUCTO BAR(EDICION)
+    </div>
+    <div class="container-fluid">
+        BEBIDAS DISPONIBLES EN EL BAR CON OPCION DE ELIMINAR
+    </div>
+    <div class="container-fluid">
+        BEBIDAS DISPONIBLES EN EL BAR CON OPCION DE ELIMINAR
+    </div>
+
+{% endblock %}
+{% block footer_javascript_page %}
+{% endblock footer_javascript_page %}

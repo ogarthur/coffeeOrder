@@ -13,7 +13,7 @@ from datetime import datetime
 
 from .forms import UserForm, UserProfileForm, GroupForm
 from .models import UserProfileInfo, UserGroup
-from coffeeorder_app.model.orderlist import OrderList
+from coffeeorder_app.model.order import OrderList
 from django.contrib.auth.models import User
 import random, string
 

@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<div class="container-fluid bg-grey">
+    {% if user.is_authenticated and group %}
+        <div class="card-container">
+            <div class="row">
+                <div class="col-12"><h1> MIEMBORS</h1></div>
+                {% for key,member in members.items %}
+                    <div  class="col-12 col-md-3 col-lg-3 mt-4 ">
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="{% static 'images/profile_pics/' %}{{ member.profile_pic }}">
+                            <div class="card-block">
+                                <h4 class="card-title mt-3">{{ member.username }}</h4>
+                            </div>
+                            {% if admin and key != request.user.id %}
+                                <div class="card-footer">
+                                    <a class="btn  float-right btn-sm btn-danger"
+                                       href="{% url 'account_app:delete_from_group' group.id key %}">ELIMINAR</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> <!-- row -->
+
+        {% else %}
+            <a type="button" class="btn btn-lg btn-default" href="#"><span
+                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+        {% endif %}
+    </div> <!-- card-container-->
+</div> <!-- container-->

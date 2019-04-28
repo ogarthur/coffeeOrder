@@ -1,0 +1,29 @@
+{% if groups %}
+    <div class="container-fluid bg-grey">
+        {% if user.is_authenticated %}
+            <div class="card-container">
+                <div class="row"><h2>GRUPOS</h2></div>
+                <div class="row">
+                    {% for group in groups %}
+                        <div class="col-12 col-md-4 col-lg-3 mt-4 ">
+                            <a href="{% url 'account_app:get_group_page' group.id %}">
+                                <div class="card">
+                                    <div class="card-block" style="background-color:{{ group.group_color }};">
+                                        <h4 class="card-title mt-3">{{ group.group_name }}</h4>
+                                        <p class="card-text">{{ group.group_description }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div> <!-- card-container -->
+        {% else %}
+            <a role="button" class="btn btn-primary" href="#"><span
+                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+        {% endif %}
+    </div> <!-- container-->
+{% endif %}

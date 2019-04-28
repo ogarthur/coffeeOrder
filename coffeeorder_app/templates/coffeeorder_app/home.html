@@ -1,30 +1,28 @@
-<!-- Vista inicial para introduccion del analisis tipo cluster-->
-{% extends "base.html" %}
+{% extends "coffeeorder_app/base.html" %}
 {% load staticfiles %}
 {% block head_css_page %}
     <link href="{% static 'css/coffee.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
-
 {% endblock head_css_page %}
 {% block title %}HOME{% endblock title %}
 {% block content %}
 
     <div class="jumbotron text-center">
-        <div class="figure col-12" >
-                    <svg class="figure-space coffee-home"  viewBox="0 0 300 300" aria-hidden="true">
-                        <image class="coffee-logo" x="35%" y="25%" xlink:href="{% static 'images/svgs/1coffee.svg'%}" />
-                        <ellipse fill="#595959" cx="185" cy="270" rx="80" ry="7"/>
-                    </svg>
+        <div class="figure col-12">
+            <svg class="figure-space coffee-home" viewBox="0 0 300 300" aria-hidden="true">
+                <image class="coffee-logo" x="35%" y="25%" xlink:href="{% static 'images/svgs/1coffee.svg' %}"/>
+                <ellipse fill="#595959" cx="185" cy="270" rx="80" ry="7"/>
+            </svg>
 
-                </div>
+        </div>
         {% if user.is_authenticated %}
             {{ warning }}
-            <a role="button" class="btn btn-primary"  href="{% url 'account_app:create_group' %}"><span
+            <a role="button" class="btn btn-primary" href="{% url 'account_app:create_group' %}"><span
                     class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
 
-            <a role="button" class="btn btn-primary"  onclick="show_code()"><span
+            <a role="button" class="btn btn-primary" onclick="show_code()"><span
                     class="glyphicon glyphicon-plus-sign"></span> Unirse a grupo</a>
-            <div class="row " id="invitationContainer" 	>
+            <div class="row " id="invitationContainer">
                 <div class="col-md-4 col-12  offset-md-4 hidden-box">
 
                     <form method="post" name="join_group_form">
@@ -47,87 +45,11 @@
 
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-8">
-                <h2>LISTA DE PEDIDOS</h2>
-
-                    <div class="card-container col-12">
-                        <div class="row">
-                        {% for order in order_list %}
-
-                            <div class="col-12 col-md-6  col-lg-3 mt-4">
-                                <a href="#">
-                                    <div class="card">
-                                        <div class="card-block" style="background-color:{{ bar.bar_color }};">
-                                            <h4 class="card-title mt-3">PEDIDO:{{ order.order_bar.bar_name| default:""}}</h4>
-                                             <h2 class="card-title mt-3">GRUPO:{{order.order_group.group_name }}</h2>
-                                            <p class="card-text">{{ order.created}}</p>
-                                            <p class="card-text">{{ order.total_prize }} €</p>
-
-                                        </div>
-                                         <div class="card-footer">
-                                            {% if admin %}
-                                            <a class="btn  float-right btn-sm btn-danger"
-                                           href="{% url 'coffeeorder_app:delete_order_list' group.id order.id %}">ELIMINAR</a>
-                                         {% else%}
-                                            <img class="card-logo" src="/static/images/svgs/1coffee.svg">
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                   </div>
-                </div> <!-- card-container -->
-            </div>
-
-        </div> <!-- row -->
-
-    </div> <!-- container-->
-   {% if groups %}
-    <div class="container-fluid bg-grey">
-
-            {% if user.is_authenticated %}
-                <div class="card-container">
-                <div class="row"> <h2 >GRUPOS</h2></div>
-                <div class="row">
-                    {% for group in groups %}
-                        <div class="col-12 col-md-4 col-lg-3 mt-4 ">
-                          <a href="{% url 'account_app:get_group_page' group.id %}">
-                            <div class="card" >
-
-
-                                <div class="card-block" style="background-color:{{ group.group_color}};">
-                                    <h4 class="card-title mt-3">{{ group.group_name }}</h4>
-                                     <p class="card-text">{{ group.group_description }}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <img class="card-logo" src="/static/images/svgs/1coffee.svg">
-                                </div>
-                            </div>
-                              </a>
-                        </div>
-                     {% endfor %}
-                </div>
-                </div> <!-- card-container -->
-
-
-            {% else %}
-                <a role="button" class="btn btn-primary"  href="#"><span
-                        class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
-            {% endif %}
-
-
-    </div> <!-- container-->
- {% endif %}
-
-
-    </div> <!-- container-->
+    {% include "coffeeorder_app/orderContainer.html" %}
+    {% include "coffeeorder_app/groupContainer.html" %}
 
 
     {% block footer_javascript_page %}
-
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/coffee.js' %}"></script>
     {% endblock footer_javascript_page %}

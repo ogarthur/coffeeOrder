@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from coffeeorder_app.model.bar import Bar
+
 
 
 # Create your model here.
@@ -52,7 +52,7 @@ class UserGroup(models.Model):
     group_admin = models.ManyToManyField(User, related_name='groupAdmin')
     group_members = models.ManyToManyField(User, related_name='groupMembers')
 
-    group_bar = models.ManyToManyField(Bar, related_name='group_bar')
+
 
     def __str__(self):
         return self.group_name

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "coffeeorder_app/base.html" %}
 {% load staticfiles %}
 {% block head_css_section %}
   <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
@@ -8,7 +8,6 @@
 <div class="jumbotron text-center">
   {% if registered %}
     <h1>Bar creado!</h1>
-
   {% else %}
   <h1>Añadir nuevo bar</h1>
   {% endif %}
@@ -42,11 +41,9 @@
         </form>
       </div>
     </div>
-
-
-
   </div>
 </div>
+
 {% else %}
   <a role="button" class="btn btn-primary"  style='margin: 5% 50%;' href="{% url 'index' %}">INICIO</a>
 {% endif %}
