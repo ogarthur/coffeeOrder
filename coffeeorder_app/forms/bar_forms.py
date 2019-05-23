@@ -10,7 +10,7 @@ class AddBarForm(forms.ModelForm):
 
     class Meta:
         model = Bar
-        msg_required = "Campo obligatorio"
+        msg_required = "Obligatory field"
 
         fields = (
             'bar_name',
@@ -22,13 +22,12 @@ class AddBarForm(forms.ModelForm):
             'bar_name',
         )
         labels = {
-            'bar_name': _('Nombre del bar'),
-            'bar_description': _("Datos del bar"),
-            'bar_color': _("Color del bar"),
+            'bar_name': _("Bar's Name"),
+            'bar_description': _("Description of the bar"),
+            'bar_color': _("Bar card color"),
         }
         error_messages = {
             'bar_name': {
-
                 'required': _(msg_required)
             }
         }

@@ -13,29 +13,30 @@
                 <image class="coffee-logo" x="35%" y="25%" xlink:href="{% static 'images/svgs/1coffee.svg' %}"/>
                 <ellipse fill="#595959" cx="185" cy="270" rx="80" ry="7"/>
             </svg>
-
         </div>
         {% if user.is_authenticated %}
-            {{ warning }}
+            {% if warning%}
+            <div class="alert alert-warning" role="alert">
+              {{ warning }}
+            </div>
+        {% endif %}
             <a role="button" class="btn btn-primary" href="{% url 'account_app:create_group' %}"><span
-                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
-
+                    class="glyphicon glyphicon-plus-sign"></span> Create group</a>
             <a role="button" class="btn btn-primary" onclick="show_code()"><span
-                    class="glyphicon glyphicon-plus-sign"></span> Unirse a grupo</a>
+                    class="glyphicon glyphicon-plus-sign"></span> Join a group</a>
             <div class="row " id="invitationContainer">
                 <div class="col-md-4 col-12  offset-md-4 hidden-box">
-
                     <form method="post" name="join_group_form">
                         {% csrf_token %}
                         <div class="form-group">
-                            <h2 style="font-weight:bold">Introducir código:</h2>
+                            <h2 style="font-weight:bold">Introduce invitation code:</h2>
                             {% for field in join_group_form %}
                                 <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
                                 {{ field }}
                             {% endfor %}
                         </div>
                         <div class="">
-                            <input class="btn btn-primary" type="submit" name="" value="Unirse">
+                            <input class="btn btn-primary" type="submit" name="" value="Join">
                         </div>
                     </form>
 
@@ -44,14 +45,10 @@
         {% endif %}
 
     </div>
-
     {% include "coffeeorder_app/orderContainer.html" %}
     {% include "coffeeorder_app/groupContainer.html" %}
-
-
     {% block footer_javascript_page %}
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/coffee.js' %}"></script>
     {% endblock footer_javascript_page %}
-
 {% endblock %}

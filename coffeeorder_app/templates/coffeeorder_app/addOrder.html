@@ -6,47 +6,175 @@
 {% block content %}
 
     <div class="jumbotron text-center">
-        <h1>PEDIDO</h1>
+        <h1>ORDER</h1>
     </div>
-    <div class="container-fluid" id="single-order">
-        AQUI SE MUESTRA EL PEDIDO DEL USUARIO
-    </div>
-    <div class="container-fluid" id="p">
-        AQUI SE MUESTRAN LAS BEBIDAS DISPONIBLES
-    </div>
-    <div class="container-fluid" id="p">
-        AQUI SE MUESTRAN LOS COMBESTIBLES DISPONIBLES
-    </div>
-
-
-    <div class="container-fluid">
+    <div class="container-fluid" id="user-order">
         <div class="row">
-            <div class="col-sm-8">
-                <h2>Seleccione un bar:</h2>
-                <div class="card-container">
-                    <div class="row"><h2>BARES</h2></div>
-                    <div class="row">
-                        {{ group.group_bar.items }}
-                        {% for bar in group.group_bar.all %}
-                            <div class="col-12 col-md-3 col-lg-2 mt-4 ">
-                                <a href="#">
-                                    <div class="card">
-                                        <div class="card-block" style="background-color:{{ bar.bar_color }};">
-                                            <h4 class="card-title mt-3">{{ bar.bar_name }}</h4>
-                                            <p class="card-text">{{ bar.bar_info }}</p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <img class="card-logo" src="/static/images/svgs/1coffee.svg">
-                                        </div>
+        <div class="col-sm-12 offset-md-5 offset-2"><button class="btn btn-dark">CHECK GROUP ORDER</button></div>
+            <div class="col-md-6 col-sm-12 offset-md-3">
+                <div class="card big-card">
+                    <div class="card-block" style="background-color:var(--hansa-yellow);">
+                        <h4 class="card-title mt-3">YOUR ORDER:</h4>
+                        <small>(Your changes will automatically appear on the group order)</small>
+                    </div>
+                    <div class="card-body">
+                        {% for product, det in order_details.items %}
+                            <div class="row" id="{{ product }}-{{ det.product_id }}">
+                                <div class="col-8">
+                                    <span id="{{ product }}-{{ det.product_id }}-quantity">{{ det.quantity }}</span>x
+                                    <span id="{{ product }}-{{ det.product_id }}-product">{{ product }}</span>=>
+                                    <span id="{{ product }}-{{ det.product_id }}-prize">{{ det.prize }}</span>€
+                                </div>
+                                <hr>
+                                <div class="col-4">
+                                    <button class="btn btn-success add-product"
+                                            onclick="addProduct('{{ product }}',{{ order_id }},{{ det.product_id }},1)">
+                                        +
+                                    </button>
+                                    <button class="btn btn-danger add-product"
+                                            onclick="addProduct('{{ product }}',{{ order_id }},{{ det.product_id }}, 0)">
+                                        -
+                                    </button>
+                                    <button class="btn btn-danger add-product"
+                                            onclick="addProduct('{{ product }}',{{ order_id }},{{ det.product_id }}, 2)">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+
+                        {% endfor %}</div>
+                    <div class="card-footer">
+                        <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                        <h4 class="card-text card-prize" id="order-prize">TOTAL: {{ order_prize }}€</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if drink_list %}
+        <div class="container-fluid" id="drink">
+            <div class="card-container">
+                <div class="row"><h2>CHOOSE YOUR DRINK:</h2></div>
+                <div class="row">
+                    {% for drink in drink_list %}
+                        <div id="choice-{{ drink.name }}" class="col-12 col-md-3 col-lg-2 mt-4 ">
+                            <div class="card card-product">
+                                <a onclick="addProduct( '{{ drink.name }}',{{ order_id }},{{ drink.product_id }},1)">
+                                    <div class="card-block" style="background-color:{{ drink.color }};">
+                                        <h4 class="card-title mt-3">{{ drink.name }}</h4>
+                                    </div>
+                                    <div class="card-footer">
+                                        <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                        <h4 class="card-text card-prize">{{ drink.prize }}€</h4>
                                     </div>
                                 </a>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div> <!-- card-container -->
-            </div>
-        </div> <!-- row -->
-    </div> <!-- container-->
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div> <!-- card-container -->
+        </div>
+    {% endif %}
+    {% if food_list %}
+        <div class="container-fluid" id="food">
+            <div class="card-container">
+                <div class="row"><h2>CHOOSE YOUR FOOD:</h2></div>
+                <div class="row">
+                    {% for food in food_list %}
+                        <div id="choice-{{ food.name }}" class="col-12 col-md-3 col-lg-2 mt-4 ">
+
+                            <div class="card card-product">
+                                <a onclick="addProduct('{{ food.name }}',{{ order_id }},{{ food.product_id }},1)">
+                                    <div class="card-block" style="background-color:{{ food.color }};">
+                                        <h4 class="card-title mt-3">{{ food.name }}</h4>
+                                    </div>
+                                    <div class="card-footer">
+                                        <img class="card-logo" src="/static/images/svgs/1coffee.svg">
+                                        <h4 class="card-text card-prize">{{ food.prize }}€</h4>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div> <!-- card-container -->
+        </div>
+    {% endif %}
+    <div class="container-fluid" id="combo">
+        AQUI SE MUESTRAN LOS COMBOS
+    </div>
 {% endblock %}
 {% block footer_javascript_page %}
+    <script>
+        function addProduct(product_name, order_id, product_id, add) {
+
+            $.ajax({
+                url: "/coffeeorder_app/product_to_order/" + order_id + "/" + product_id + "/" + add,
+                data: {
+                    'order': order_id,
+                    'product': product_id,
+                    'add': add,
+                },
+                dataType: 'json',
+                success: function (result) {
+                    let choice_cost = 0;
+                    let choice_quantity = 0;
+
+                    if (add != 2 && (typeof result['order_details'][product_name] !== 'undefined')) {
+                        choice_cost = result['order_details'][product_name]['prize']
+                        choice_quantity = result['order_details'][product_name]['quantity']
+                    }
+                    let html_product = '<div class="row" id="' + product_name + '-' + product_id + '">\
+                                <div class="col-8">\
+                                    <span id="' + product_name + '-' + product_id + '-quantity">' + choice_quantity + '</span>x\
+                                    <span id="' + product_name + '-' + product_id + '-product">' + product_name + '</span>=>\
+                                    <span id="' + product_name + '-' + product_id + '-prize">' + choice_cost + '</span>€\
+                                </div>\
+                                <div class="col-4">\
+                                    <button class="btn btn-success add-product" onclick="addProduct(\'' + product_name + '\' , ' + order_id + ',' + product_id + ',1)">+</button>\
+                                    <button class="btn btn-danger add-product" onclick="addProduct(\'' + product_name + '\',' + order_id + ',' + product_id + ',0)">-</button>\
+                                    <button class="btn btn-danger add-product" onclick="addProduct(\'' + product_name + '\',' + order_id + ',' + product_id + ',2)">Remove</button>\
+                                </div>\
+                            </div>'
+
+                    if ($("#" + product_name + "-" + product_id).length <= 0) {
+                        $(".card-body").append(html_product)
+                    }
+
+                    if (add != 2) {
+                        $("#order-prize").text("TOTAL: " + result.prize + "€")
+                        $("#" + product_name + "-" + product_id + "-quantity").text(choice_quantity)
+                        $("#" + product_name + "-" + product_id + "-prize").text(choice_cost)
+                        $("#choice-" + product_name).addClass("choice-selected")
+                    }
+                    if ($("#" + product_name + "-" + product_id + "-quantity").text() === '0' || add == 2) {
+
+                        $("#" + product_name + "-" + product_id).remove()
+                        $("#choice-" + product_name).removeClass("choice-selected")
+                    }
+
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            {% for drink in drink_list %}
+                console.log($("#{{ drink.name }}-{{ drink.product_id }}").length)
+                if ($("#{{ drink.name }}-{{ drink.product_id }}").length > 0) {
+                    $("#choice-{{drink.name}}").addClass("choice-selected")
+                }
+            {% endfor %}
+            {% for drink in food_list %}
+                console.log($("#{{ drink.name }}-{{ drink.product_id }}").length)
+                if ($("#{{ drink.name }}-{{ drink.product_id }}").length > 0) {
+                    $("#choice-{{drink.name}}").addClass("choice-selected")
+                }
+            {% endfor %}
+
+        });
+    </script>
 {% endblock footer_javascript_page %}

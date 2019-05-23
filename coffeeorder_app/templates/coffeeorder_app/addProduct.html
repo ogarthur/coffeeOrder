@@ -6,17 +6,14 @@
 {% block content %}
 
     <div class="jumbotron text-center">
-        <h1>AÑADIR PRODUCTO</h1>
+        <h1>ADD NEW PRODUCT</h1>
     </div>
-
-
-
 
     <div class="container-fluid" id="product-form">
         <div class="container-fluid registration-container col-md-6 col-md-offset-3">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2>FORMULARIO PRODUCTO</h2>
+                    <h2>ADD PRODUCT FORM:/h2>
                     <form enctype="multipart/form-data" method="post">
                         {% csrf_token %}
                         {% for field in product_form %}
@@ -44,14 +41,13 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <input class="btn btn-primary" type="submit" name="" value="AÑADIR PRODUCTO"/>
+                            <input class="btn btn-primary" type="submit" name="" value="ADD PRODUCT"/>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
 {% block footer_javascript_page %}
 {% endblock footer_javascript_page %}

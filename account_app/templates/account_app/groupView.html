@@ -8,45 +8,41 @@
     <div class="jumbotron text-center">
         {% if user.is_authenticated and group %}
             <div class="row">
-                <h1 class="mx-auto">GRUPO:{{ group.group_name|default:' ' }}</h1>
+                <h1 class="mx-auto">GROUP: {{ group.group_name|default:' ' }}</h1>
             </div>
-
             <div class="row">
                 <a role="button" class="btn btn-primary"
                    href="{% url 'coffeeorder_app:menu_order_list' group.id %}"><span
-                        class="glyphicon glyphicon-plus-sign"></span> CREAR PEDIDO</a>
+                        class="glyphicon glyphicon-plus-sign"></span> CREATE ORDER</a>
                 <a role="button" class="btn btn-primary" href="{% url 'coffeeorder_app:add_bar' group.id %}"><span
-                        class="glyphicon glyphicon-plus-sign"></span> CREAR BAR</a>
+                        class="glyphicon glyphicon-plus-sign"></span> CREATE BAR</a>
                 <a role="button" class="btn btn-primary" id="inviteToGroup" onclick="show_code()"><span
-                        class="glyphicon glyphicon-plus-sign"></span> INVITAR A GRUPO</a>
+                        class="glyphicon glyphicon-plus-sign"></span> INVITE TO GROUP</a>
             </div>
-
             <div class="row group-options">
-
-                <a role="button" class="btn btn-danger" href="{% url 'account_app:abandon_group' group.id %}">ABANDONAR
-                    GRUPO</a>
+                <a role="button" class="btn btn-danger" href="{% url 'account_app:abandon_group' group.id %}">
+                    ABANDON GROUP
+                </a>
                 {% if admin %}
                     <a role="button" class="btn btn-danger"
                        href="{% url 'account_app:delete_group' group.id %}">ELIMINAR</a>
                     <a role="button" id="close_button" class="btn btn-warning" onclick="close_group_button()">
-                        {% if group.closed %}ABRIR{% else %}CERRAR{% endif %} GRUPO</a>
+                        {% if group.closed %}OPEN{% else %}CLOSE{% endif %} GROUP</a>
                 {% endif %}
             </div>
             <div class="row " id="invitationContainer">
                 <div class="col-md-4 col-sm-12 col-md-offset-4 hidden-box">
-                    <h3>CÓDIGO DE INVITACIÓN:</h3>
+                    <h3>INVITATION CODE:</h3>
                     <h2 style="color: red;font-weight: bold">{{ group.group_code }}</h2>
                 </div>
             </div>
         {% else %}
-            <p> Este grupo no existe o no eres miembro de él.</p>
+            <p> This group does not exist anymore or you are not a member of it.</p>
         {% endif %}
     </div>
 
-
     {% include "coffeeorder_app/orderContainer.html" %}
     {% include "coffeeorder_app/memberContainer.html" %}
-
 
     {% block footer_javascript_page %}
         <script src="{% static 'js/main.js' %}"></script>

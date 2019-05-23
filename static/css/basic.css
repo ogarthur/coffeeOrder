@@ -11,6 +11,7 @@
     --light-red-orchre: #E76F51;
     --main-txt-color: blue;
     --main-padding: 15px;
+    --main-backgroung:#ffc8241a;
 }
 
 html,
@@ -18,10 +19,11 @@ body {
     font-family: Verdana, Geneva, sans-serif;
     height: 100%;
     position: relative;
+    background-color: var(--main-backgroung);
 }
 
 footer {
-    margin-top:3.5em;
+    /*margin-top:3.5em;*/
     width: 100%;
     height: auto;
     background-color: var(--sandy-brown);
@@ -31,11 +33,11 @@ footer {
     width: 1em;
 }
 .content-container {
-    min-height: 90vh; /* will cover the 90% of viewport */
+    /*min-height: 95vh; /* will cover the 90% of viewport */
     overflow: hidden;
     display: block;
     position: relative;
-    background-color: #ffc8241a;
+
 
 }
 #invitationContainer{

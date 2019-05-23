@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html  lang="es">
 <head>
-    <title>{% block title %}COFFEEORDER!{% endblock title %}</title>
+    <title>{% block title %}COFFEEORDER APP!{% endblock title %}</title>
     {% block favicon %}
         <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/gif" sizes="16x16">
         <link rel="icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon"/>
@@ -16,8 +16,7 @@
           <meta name="description" content="Coffe order application">
           <meta name="keywords" content="COFFEE,Coffee,Coffe,Cofee,Cofe, order,list,bar,coffeeshop">
           <meta name="author" content="Arturo OG">
-
-            {% endblock metas %}
+        {% endblock metas %}
         {% block head_contentlanguage %}
             <meta http-equiv="Content-Language" value="es"/>
         {% endblock head_contentlanguage %}
@@ -52,7 +51,6 @@
 <body>
 {# Navigation #}
 <header>
-
     {% if user.is_authenticated %}
         <nav class="navbar navbar-expand-lg navbar-light ">
         <a class="navbar-brand" href="{% url 'index' %}">
@@ -65,24 +63,17 @@
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle  active" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="true" aria-expanded="false">
-                        {% if request.session.profile_pic %}
-
                             <img class="avatar-img-nav"
-                                 src="{% static 'images/profile_pics/' %}{{ request.session.profile_pic }}">
-                        {% else %}
-                            <img class="avatar-img-nav" src="{% static 'images/profile_pics/avatar0.png' %}">
-                        {% endif %}
+                                 src="{% static 'images/profile_pics/' %}{{ request.user.profile_pic }}">
                         {{ request.user.username }}
                         <span class="caret"></span></a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'account_app:get_profile' user.id %}">Perfil</a>
+                        <a class="dropdown-item" href="{% url 'account_app:get_profile' user.id %}">Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'account_app:user_logout' %}">Logout</a>
                     </div>
@@ -100,15 +91,13 @@
 </div>
 {# Footer #}
 {% if user.is_authenticated %}
-    <footer class="footer navbar">
-    </footer>
+
 {% endif %}
 </body>
 
 {# JavaScript #}
 {% block footer_javascript %}
     {% block footer_javascript_site %}
-
     {% endblock footer_javascript_site %}
     {% block footer_javascript_section %}{% endblock footer_javascript_section %}
     {% block footer_javascript_page %}{% endblock footer_javascript_page %}

@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 #
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
+
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -11,12 +12,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
-from .forms import UserForm, UserProfileForm, GroupForm
-from .models import UserProfileInfo, UserGroup
+from .forms import CustomUserCreationForm, GroupForm
+from .models import CustomUser, UserGroup
 from coffeeorder_app.model.order import OrderList
 from django.contrib.auth.models import User
 import random, string
-
+from .decorators import is_group_admin
 app_name = 'account_app'
 # Create your views here.
 
@@ -36,73 +37,63 @@ def is_admin(group_id,user_id):
 def register(request):
     registered = False
     if request.method == "POST":
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(request.POST, request.FILES)
+        #user_form = UserForm(data=request.POST)
+        user_form = CustomUserCreationForm(request.POST, request.FILES)
 
         if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
             registered = True
 
             return redirect('index')
         else:
-            print(user_form.errors,profile_form.errors)
+            print(user_form.errors)
             return render(request, '{}/registration.html'.format(app_name),
                           {'user_form': user_form,
-                           'profile_form': profile_form,
                            'registered': registered})
     else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
+        user_form = CustomUserCreationForm()
         return render(request,'{}/registration.html'.format(app_name),
         {'user_form': user_form,
-        'profile_form': profile_form,
         'registered': registered})
+
 
 #LOGIN
 def user_login(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(username=username,password=password)
+        user = authenticate(username=username, password=password)
 
         if user:
             if user.is_active:
                 login(request, user)
-                if UserProfileInfo.objects.filter(user=user).exists():
-                    user_info = UserProfileInfo.objects.filter(user=user).values_list('profile_pic', flat=True)
-
-                    request.session['profile_pic'] = user_info[0]
                 return redirect('index')
 
             else:
-                return HttpResponse("Cuenta no activa")
+                return HttpResponse("Account not active")
         else:
             print("Someone tried to login and failed")
             print("Username: {} ".format(username))
             return render(request, '{}/login.html'.format(app_name), {'login_error':'Credeenciales no válidos'})
     else:
-        return render(request, '{}/login.html'.format(app_name),{})
+        return render(request, '{}/login.html'.format(app_name), {})
 
 
-#LOGOUT
+# LOGOUT
 @login_required
 def user_logout(request):
     logout(request)
     return redirect('index')
 
+
 @login_required
 def delete_user(request):
     from django.contrib.auth.models import User
 
-    user = User.objects.get(username=request.user.username)
+    user = CustomUser.objects.get(username=request.user.username)
     groups = UserGroup.objects.filter(group_admin=user)
     for group in groups:
 
@@ -113,51 +104,46 @@ def delete_user(request):
     return redirect('index')
 
 
-
 @login_required
 def delete_user_from_group(request, group_id, user_id):
     from django.contrib.auth.models import User
     group = UserGroup.objects.get(id=group_id)
-    user_to_delete = User.objects.get(id=user_id)
+    user_to_delete = CustomUser.objects.get(id=user_id)
     if group.group_admin.filter(pk=request.user.pk).exists():
         group.group_admin.remove(user_to_delete)
         group.group_members.remove(user_to_delete)
     response = '/account_app/group/{}'.format(group.id)
     return redirect(response)
 
+
 # ###########ENDUSER###########################
 # ##########group###############
 @login_required
+
 def delete_group(request, group_id):
 
-
     group_to_delete = UserGroup.objects.get(id=group_id)
-
-    if is_admin(group_id,request.user.id):
-
+    if is_admin(group_id, request.user.id):
         group_to_delete.delete()
-
     return redirect('index')
 
 @login_required
 def abandon_group(request, group_id):
-    group_to_delete = UserGroup.objects.get(id=group_id)
-
-    group_to_delete.group_members.remove(request.user)
-    if group_to_delete.group_members.count() == 0:
+    group_to_abandon = UserGroup.objects.get(id=group_id)
+    group_to_abandon.group_members.remove(request.user)
+    if group_to_abandon.group_members.count() == 0:
         delete_group(group_id)
     return redirect('index')
 
 
 @login_required
 def get_profile(request, user_id):
-    user = User.objects.get(id=user_id)
-    pic = UserProfileInfo.objects.get(user=user)
+    user = CustomUser.objects.get(id=user_id)
+
     groups_in = UserGroup.objects.filter(group_members=user).values()
     user_data = {
         'user': user,
-        'profile_pic': pic.profile_pic,
-        'groups_in':groups_in,
+        'groups_in': groups_in,
     }
 
     return render(request, '{}/userProfile.html'.format(app_name), {'user_data': user_data})
@@ -167,11 +153,8 @@ def get_profile(request, user_id):
 def create_group(request):
     registered = False
     if request.method == "POST":
-
         group_form = GroupForm(request.POST, request.FILES)
-
         if group_form.is_valid():
-
             group = group_form.save()
             group.group_code = ''.join(random.choices(string.ascii_letters + string.digits, k=4)).upper()
             group.group_admin.add(request.user)
@@ -193,17 +176,12 @@ def get_group_page(request, group_id):
 
     for g in group.group_members.all():
 
-        user = User.objects.get(id=g.id)
-
-        pic = UserProfileInfo.objects.get(user=user)
-
-        members[g.id]= {
-            'username' : g.username,
-            'name' : g.first_name,
-            'profile_pic': pic.profile_pic,
+        user = CustomUser.objects.get(id=g.id)
+        members[g.id] = {
+            'username': g.username,
+            'name': g.first_name,
+            'profile_pic': g.profile_pic,
         }
-
-
         order_list = OrderList.objects.filter(order_group=group)
 
     if group.group_members.filter(pk=request.user.pk).exists():
@@ -213,7 +191,6 @@ def get_group_page(request, group_id):
         else:
             print('NO ES ADMIN...')
             admin = False
-
         return render(request, '{}/groupView.html'.format(app_name),{
             'group': group,
             'members': members,
@@ -223,9 +200,6 @@ def get_group_page(request, group_id):
         })
     else:
         return render(request, '{}/groupView.html'.format(app_name), )
-
-
-
 
 
 @login_required

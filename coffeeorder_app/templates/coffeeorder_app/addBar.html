@@ -7,9 +7,9 @@
 
 <div class="jumbotron text-center">
   {% if registered %}
-    <h1>Bar creado!</h1>
+    <h1>Bar created!</h1>
   {% else %}
-  <h1>Añadir nuevo bar</h1>
+  <h1>Add new bar</h1>
   {% endif %}
 </div>
 
@@ -19,7 +19,7 @@
   <div class="container-fluid registration-container col-md-6 col-md-offset-3">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <h2>Datos del bar:</h2>
+        <h2>Bar's Data:</h2>
         <form enctype="multipart/form-data" method="post">
           {% csrf_token %}
           {% for field in bar_form %}
@@ -45,7 +45,7 @@
 </div>
 
 {% else %}
-  <a role="button" class="btn btn-primary"  style='margin: 5% 50%;' href="{% url 'index' %}">INICIO</a>
+  <a role="button" class="btn btn-primary"  style='margin: 5% 50%;' href="{% url 'index' %}">HOME</a>
 {% endif %}
 {% endblock %}
 {% block footer_javascript_page %}

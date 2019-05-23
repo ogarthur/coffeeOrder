@@ -6,7 +6,7 @@ from coffeeorder_app.model.bar import Bar
 from coffeeorder_app.model.product import Product, ProductVariation,ProductBar
 
 
-msg_required = "Campo obligatorio"
+msg_required = "Obligatory field"
 
 
 class AddProductForm(forms.ModelForm):
@@ -25,12 +25,12 @@ class AddProductForm(forms.ModelForm):
             'product_type',
         )
         labels = {
-            'product_name': _('Nombre'),
-            'product_type': _('Tipo de producto'),
+            'product_name': _('Name'),
+            'product_type': _('Type of product'),
             'product_color': _('Color'),
         }
         help_texts = {
-            'product_color': _('Elige el color que mejor represente al producto.')
+            'product_color': _('Choose the color for the card of the product')
         }
         error_messages = {
             'product_name': {
@@ -62,7 +62,7 @@ class AddProductBarForm(forms.ModelForm):
             'product_bar_prize',
         )
         labels = {
-            'product_bar_prize': _('Precio'),
+            'product_bar_prize': _('Prize'),
             'product_bar_stock': _('Stock'),
         }
 

@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
-from coffeeorder_app.forms.bar_forms  import AddBarForm
-
+from coffeeorder_app.forms.bar_forms import AddBarForm
 
 from ..model.bar import Bar
 from account_app.models import UserGroup

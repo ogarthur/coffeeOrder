@@ -1,8 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.conf import settings
-
-
 
 
 # Create your model here.
@@ -27,17 +25,9 @@ PROFILE_PIC_CHOICES = (
 )
 
 
-class UserProfileInfo(models.Model):
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userInfo")
-
+class CustomUser(AbstractUser):
+    # add additional fields in here
     profile_pic = models.CharField(choices=PROFILE_PIC_CHOICES, default='256_0.png', max_length=100)
-    language = models.CharField(max_length=10,
-                                choices=settings.LANGUAGES,
-                                default=settings.LANGUAGE_CODE)
-
-    def __str__(self):
-        return self.user.username
 
 
 class UserGroup(models.Model):
@@ -45,14 +35,12 @@ class UserGroup(models.Model):
     group_name = models.CharField(max_length=100, unique=True)
     group_description = models.TextField(max_length=220, blank=True)
     max_members = models.IntegerField(default=15)
-    group_color = models.CharField(max_length=100, default="white")
+    group_color = models.CharField(max_length=100, default="yellow")
     group_code = models.CharField(max_length=100)
     closed = models.BooleanField(default=False)
 
-    group_admin = models.ManyToManyField(User, related_name='groupAdmin')
-    group_members = models.ManyToManyField(User, related_name='groupMembers')
-
-
+    group_admin = models.ManyToManyField(CustomUser, related_name='groupAdmin')
+    group_members = models.ManyToManyField(CustomUser, related_name='groupMembers')
 
     def __str__(self):
         return self.group_name

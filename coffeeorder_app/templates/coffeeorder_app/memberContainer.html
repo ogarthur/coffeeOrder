@@ -1,9 +1,9 @@
 {% load staticfiles %}
-<div class="container-fluid bg-grey">
+<div class="container-fluid ">
     {% if user.is_authenticated and group %}
         <div class="card-container">
             <div class="row">
-                <div class="col-12"><h1> MIEMBORS</h1></div>
+                <div class="col-12"><h1> MEMBERS</h1></div>
                 {% for key,member in members.items %}
                     <div  class="col-12 col-md-3 col-lg-3 mt-4 ">
                         <div class="card">
@@ -15,17 +15,16 @@
                             {% if admin and key != request.user.id %}
                                 <div class="card-footer">
                                     <a class="btn  float-right btn-sm btn-danger"
-                                       href="{% url 'account_app:delete_from_group' group.id key %}">ELIMINAR</a>
+                                       href="{% url 'account_app:delete_from_group' group.id key %}">REMOVE</a>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
                 {% endfor %}
             </div> <!-- row -->
-
         {% else %}
             <a type="button" class="btn btn-lg btn-default" href="#"><span
-                    class="glyphicon glyphicon-plus-sign"></span> Crear grupo</a>
+                    class="glyphicon glyphicon-plus-sign"></span> Create group</a>
         {% endif %}
     </div> <!-- card-container-->
 </div> <!-- container-->
