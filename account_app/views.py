@@ -118,21 +118,27 @@ def delete_user_from_group(request, group_id, user_id):
 
 # ###########ENDUSER###########################
 # ##########group###############
-@login_required
 
+@login_required
 def delete_group(request, group_id):
 
     group_to_delete = UserGroup.objects.get(id=group_id)
     if is_admin(group_id, request.user.id):
         group_to_delete.delete()
+
     return redirect('index')
+
 
 @login_required
 def abandon_group(request, group_id):
+    print("xxxABANDONING")
     group_to_abandon = UserGroup.objects.get(id=group_id)
     group_to_abandon.group_members.remove(request.user)
+    print("ABANDONING")
     if group_to_abandon.group_members.count() == 0:
-        delete_group(group_id)
+        print("GRUPO VACIO")
+        delete_group(request, group_id)
+
     return redirect('index')
 
 
@@ -191,7 +197,7 @@ def get_group_page(request, group_id):
         else:
             print('NO ES ADMIN...')
             admin = False
-        return render(request, '{}/groupView.html'.format(app_name),{
+        return render(request, 'coffeeorder_app/groupPage.html',{
             'group': group,
             'members': members,
             'admin': admin,
@@ -199,7 +205,7 @@ def get_group_page(request, group_id):
 
         })
     else:
-        return render(request, '{}/groupView.html'.format(app_name), )
+        return render(request, 'coffeeorder_app/groupPage.html' )
 
 
 @login_required

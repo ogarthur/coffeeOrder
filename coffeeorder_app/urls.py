@@ -5,7 +5,7 @@ from coffeeorder_app.views import bar_views, order_views, product_views, views
 app_name = 'coffeeorder_app'
 
 urlpatterns = [
-    path('group/<int:group_id>', views.get_group_page,name='get_group_page'),
+    path('group/<int:group_id>', views.get_group_page, name='group'),
     path('<int:group_id>/addbar/', bar_views.add_bar, name='add_bar'),
     path('<int:group_id>/menuorderlist/', order_views.menu_order_list, name='menu_order_list'),
     path('<int:group_id>/addorderlist/<int:bar_id>', order_views.add_order_list, name='add_order_list'),

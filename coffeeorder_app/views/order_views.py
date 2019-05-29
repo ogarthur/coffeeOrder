@@ -35,12 +35,13 @@ def add_order_list(request, group_id, bar_id):
         if bar == order.order_bar and group == order.order_group:
             free = False
             break
-
+    #free = True
     if free:
         order_list = OrderList()
         time_created = datetime.today()
         time_expiration = time_created + timedelta(hours=2)
         order_list.created = time_created
+        order_list.user_creator = request.user
         order_list.expiration = time_expiration
         order_list.order_bar = bar
         order_list.order_group = group
@@ -52,8 +53,10 @@ def add_order_list(request, group_id, bar_id):
 
 @login_required
 def delete_order_list(request, group_id, order_list_id):
-    OrderList.objects.get(id=order_list_id).delete()
-    return redirect('get_group_page', group_id=group_id)
+    order_list = OrderList.objects.get(id=order_list_id)
+    order_list.state = False
+    order_list.save()
+    return redirect('coffeeorder_app:group', group_id=group_id)
 
 
 @login_required
@@ -81,23 +84,26 @@ def order_ticket(request, order_list_id, individual=False):
     order_details = {}
     order_prize = 0
     if individual:
-        order = Order.objects.get(order_order_list_id=order_list.id, order_user=request.user)
-        products = OrderItem.objects.filter(order=order)
-        for prod in products.all():
-            try:
-                prize = prod.order_product_bar.product_bar_prize * int(prod.quantity)
-                order_details[prod.order_product_bar.product.product_name] = {
-                    'quantity': prod.quantity,
-                    'prize': prize,
-                    'product_id': prod.order_product_bar.id,
-                }
-                order_prize += prize
-            except OrderItem.DoesNotExist:
-                order_details[prod.order_product_bar.product.product_name] = {
-                    'quantity': 0,
-                    'prize': 0,
-                    'product_id': prod.order_product_bar.id,
-                }
+        try:
+            order = Order.objects.get(order_order_list_id=order_list.id, order_user=request.user)
+            products = OrderItem.objects.filter(order=order)
+            for prod in products.all():
+                try:
+                    prize = prod.order_product_bar.product_bar_prize * int(prod.quantity)
+                    order_details[prod.order_product_bar.product.product_name] = {
+                        'quantity': prod.quantity,
+                        'prize': prize,
+                        'product_id': prod.order_product_bar.id,
+                    }
+                    order_prize += prize
+                except OrderItem.DoesNotExist:
+                    order_details[prod.order_product_bar.product.product_name] = {
+                        'quantity': 0,
+                        'prize': 0,
+                        'product_id': prod.order_product_bar.id,
+                    }
+        except Order.DoesNotExist:
+            pass
     else:
         orders = Order.objects.filter(order_order_list_id=order_list.id)
         for single in orders:
@@ -166,6 +172,7 @@ def add_order(request, order_list_id):
     try:
         order = Order.objects.get(order_order_list_id=order_list.id,
                                   order_user=request.user)
+
     except Order.DoesNotExist:
         '''no order found'''
     except Order.MultipleObjectsReturned:

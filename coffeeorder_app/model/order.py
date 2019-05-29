@@ -19,6 +19,7 @@ class OrderList(models.Model):
         pass
 
     created = models.DateTimeField(blank=True)
+    user_creator = models.ForeignKey(CustomUser, related_name='orderListCreator', on_delete=models.PROTECT)
     expiration = models.DateTimeField(blank=True)
     total_prize = models.IntegerField(default=0)
     order_bar = models.ForeignKey(Bar, related_name='Bar', on_delete=models.PROTECT)
@@ -44,10 +45,8 @@ class Order(models.Model):
     class Meta:
         pass
 
-    order_order_list = models.ForeignKey(OrderList, related_name='OrderList', on_delete=models.PROTECT)
-    #order_product_bar = models.ManyToManyField(ProductBar, related_name='ProductBar')
-    order_user = models.ForeignKey(CustomUser, related_name='orderUser', on_delete=models.PROTECT)
-    #order_combo = models.ManyToManyField(Combo, related_name='orderCombo')
+    order_order_list = models.ForeignKey(OrderList, related_name='OrderList', on_delete=models.CASCADE)
+    order_user = models.ForeignKey(CustomUser, related_name='orderUser', on_delete=models.CASCADE)
 
     def __str__(self):
         return "ORDER:{}_{}_{}".format(self.order_order_list.pk, self.pk, self.order_user.username)
@@ -57,7 +56,7 @@ class OrderItem(models.Model):
 
     quantity = models.IntegerField(default=0)
     order = models.ForeignKey(Order, related_name='ProductOrder', on_delete=models.CASCADE)
-    order_product_bar = models.ForeignKey(ProductBar, related_name='OrderProductBar', on_delete=models.PROTECT)
+    order_product_bar = models.ForeignKey(ProductBar, related_name='OrderProductBar', on_delete=models.CASCADE)
 
     def __str__(self):
         return "ORDER:{}".format(self.quantity)

@@ -99,6 +99,7 @@ def get_group_page(request, group_id):
         order_list_details[order.pk]['order'] = order
         order_list_details[order.pk]['details'], order_list_details[order.id]['prize'] = order_ticket(request, order.pk, False)
         print(order_list_details[order.pk]['order'].created)
+
     if group.group_members.filter(pk=request.user.pk).exists():
 
         if is_admin(group_id, request.user.id):
@@ -113,4 +114,5 @@ def get_group_page(request, group_id):
 
         })
     else:
-        return render(request, 'coffeeorder_app/groupPage.html', )
+        return render(request, 'coffeeorder_app/groupPage.html')
+

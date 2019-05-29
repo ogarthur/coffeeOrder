@@ -10,15 +10,15 @@
                             <div class="card-block" style="background-color:{{ bar.bar_color }};">
                                 <h2 class="card-title mt-3">BAR:{{ value.order.order_bar.bar_name| default:"" }}</h2>
                                 <h2 class="card-title mt-3">GROUP:{{ value.order.order_group.group_name }}</h2>
-                                <p class="card-text">{{ value.created }}</p>
+                                <p class="card-text">{{ value.order.created }}</p>
                                 {% for user, products in value.details.items  %}
                                     {% for product, p_detail in products.items%}
                                     <div class="row" id="{{ product }}-{{ det.product_id }}">
                                         <div class="col-12">
-                                            <span id="{{ product }}-{{ det.product_id }}-product">{{ product }}</span> X
-                                            <span id="{{ product }}-{{ det.product_id }}-quantity">{{ p_detail.quantity }}</span> =>
-                                            <span id="{{ product }}-{{ det.product_id }}-prize">{{  p_detail.prize }}</span>€
-                                            (<span id="{{ product }}-{{ det.product_id }}-user">{{  user }}</span>)
+                                            <span id="{{ product }}-{{  p_detail.product_id }}-product">{{ product }}</span> X
+                                            <span id="{{ product }}-{{  p_detail.product_id }}-quantity">{{ p_detail.quantity }}</span> =>
+                                            <span id="{{ product }}-{{  p_detail.product_id }}-prize">{{  p_detail.prize }}</span>€
+                                            (<span id="{{ product }}-{{  p_detail.product_id }}-user">{{  user }}</span>)
                                         </div>
                                     </div>
                                      {% endfor %}
@@ -31,7 +31,7 @@
                             <div class="card-footer">
                                 {% if admin %}
                                     <a class="btn  float-right btn-sm btn-danger"
-                                       href="{% url 'coffeeorder_app:delete_order_list' group.id order.id %}">DELETE</a>
+                                       href="{% url 'coffeeorder_app:delete_order_list' group.id key %}">DELETE</a>
                                 {% else %}
                                     <img class="card-logo" src="/static/images/svgs/1coffee.svg">
                                 {% endif %}
