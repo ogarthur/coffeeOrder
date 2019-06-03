@@ -19,11 +19,11 @@ class OrderList(models.Model):
         pass
 
     created = models.DateTimeField(blank=True)
-    user_creator = models.ForeignKey(CustomUser, related_name='orderListCreator', on_delete=models.PROTECT)
+    user_creator = models.ForeignKey(CustomUser, related_name='orderListCreator', on_delete=models.CASCADE)
     expiration = models.DateTimeField(blank=True)
     total_prize = models.IntegerField(default=0)
-    order_bar = models.ForeignKey(Bar, related_name='Bar', on_delete=models.PROTECT)
-    order_group = models.ForeignKey(UserGroup, related_name='UserGroup', on_delete=models.PROTECT)
+    order_bar = models.ForeignKey(Bar, related_name='Bar', on_delete=models.CASCADE)
+    order_group = models.ForeignKey(UserGroup, related_name='UserGroup', on_delete=models.CASCADE)
     state = models.BooleanField(default=True)
 
     def check_state(self):

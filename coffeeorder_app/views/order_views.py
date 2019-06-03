@@ -72,8 +72,8 @@ def check_order(request):
 
     for order in orders:
 
-        order.state = False
-        order.save()
+        #order.state = False
+        order.delete()
 
     return redirect('index')
 
@@ -175,6 +175,8 @@ def add_order(request, order_list_id):
 
     except Order.DoesNotExist:
         '''no order found'''
+        order = Order.objects.create(order_order_list_id=order_list.id,
+                                  order_user=request.user)
     except Order.MultipleObjectsReturned:
         '''multiples orders'''
 
